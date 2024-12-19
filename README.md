@@ -4,7 +4,7 @@
 
 <div style="text-align: justify;">
 A plataforma desenvolvida para atender às necessidades de gerenciamento financeiro de empresas de todos os portes, sejam elas grandes ou pequenas. Entre suas diversas funcionalidades, destaca-se a capacidade de monitorar de forma eficiente e prática os gastos provenientes de outros setores dentro da organização, promovendo uma visão clara e detalhada das finanças corporativas. Além disso, a plataforma oferece recursos de automação que reduzem tarefas repetitivas e aumentam a produtividade, incluindo o preenchimento automatizado de notas fiscais, minimizando o risco de erros manuais que podem comprometer a precisão dos registros. Outro diferencial é a geração de relatórios personalizados, que proporcionam insights valiosos para tomada de decisões estratégicas. O principal objetivo dessa solução é aprimorar o gerenciamento e a coordenação fiscal das empresas, reduzindo significativamente as margens de erro de maneira simples e intuitiva, sem perder o foco na excelência operacional e na entrega de resultados confiáveis e consistentes.
-<div>
+</div>
 
 ## 📌 Funcionalidades
 
