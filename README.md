@@ -55,30 +55,30 @@ Instruções sobre como rodar o projeto localmente e como interagir com ele.
 
 ## 👥 Equipe
 
-<div style="display: flex; justify-content: space-around; gap: 20px;">
+<div style="display: flex; justify-content: space-evenly; gap: 20px;">
 
-  <div style="text-align: center; flex: 1;">
+  <div style="text-align: center;">
     <a href="https://github.com/TeclaFernandes">
       <img src="https://avatars.githubusercontent.com/u/115437392?v=4" alt="Tecla Fernandes" width="100" heigth="100" />
     </a>
     <p><strong>Tecla Fernandes</strong></p>
   </div>
 
-  <div style="text-align: center; flex: 1;">
+  <div style="text-align: center;">
     <a href="https://github.com/GustavoFigueiredo09">
       <img src="https://avatars.githubusercontent.com/u/165566226?v=4" alt="Gustavo Figueiredo" width="100" heigth="100" />
     </a>
     <p><strong>Gustavo Figueiredo</strong></p>
   </div>
 
-  <div style="text-align: center; flex: 1;">
+  <div style="text-align: center; flex:">
     <a href="https://github.com/Lukasoli15">
       <img src="https://avatars.githubusercontent.com/u/191923505?v=4" alt="Lucas Oliveira" width="100" heigth="100" />
     </a>
     <p><strong>Lucas <br> Oliveira</strong></p>
   </div>
 
-  <div style="text-align: center; flex: 1;">
+  <div style="text-align: center;">
     <a href="https://github.com/Fernando4759">
       <img src="https://avatars.githubusercontent.com/u/168605275?v=4" alt="Fernando Barbosa" width="100" heigth="100" />
     </a>
