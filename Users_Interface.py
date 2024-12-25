@@ -24,7 +24,7 @@ class Cactus_Fiscal:
 
         self.saving_location = ''
         self.PDF_path = []
-        self.PDF_List = None
+        self.Arquivo_Lista = None
 
         # Menubar
         self.menubar = Menu(self.window)
@@ -106,26 +106,26 @@ class Cactus_Fiscal:
                                                      title="Selecione um arquivo PDF", filetypes=(("PDF files", "*.pdf*"),))
         if selected_files:
             for path in selected_files:
-                self.PDF_List.insert(END, path)
+                self.Arquivo_Lista.insert(END, path)
 
     # Tela "Arquivos"
     def Tela_Arquivos(self):
         self.ClearScreen()
 
         # Texto selecionar "Selecionar arquivos"
-        select_pdf_label = Label(self.frame_1, text="Selecione arquivos",
+        select_label = Label(self.frame_1, text="Selecione arquivos",
                                  font=(self.font_2, 15, 'bold'), bg=self.color_2, fg=self.color_3)
-        select_pdf_label.place(x=40, y=20)
+        select_label.place(x=40, y=20)
 
         # Lista os arquivos selecionados da memoria
-        self.PDF_List = Listbox(self.frame_1, font=(self.font_2, 10, 'bold'),
+        self.Arquivo_Lista = Listbox(self.frame_1, font=(self.font_2, 10, 'bold'),
                                 bg=self.color_2, fg=self.color_3,
                                 selectbackground=self.color_5, selectmode=MULTIPLE)
-        self.PDF_List.place(x=40, y=50, width=500, height=440)
+        self.Arquivo_Lista.place(x=40, y=50, width=500, height=440)
 
         # Barra de rolagem da caixa de arquivos
-        scrollbar = Scrollbar(self.PDF_List, orient="vertical")
-        scrollbar.config(command=self.PDF_List.yview)
+        scrollbar = Scrollbar(self.Arquivo_Lista, orient="vertical")
+        scrollbar.config(command=self.Arquivo_Lista.yview)
         scrollbar.pack(side="right", fill="y")
         
 
@@ -148,26 +148,26 @@ class Cactus_Fiscal:
         delete_button.place(x=750, y=540)
 
         # Texto selecionar "Arquivos salvos"
-        select_pdf_label2 = Label(self.frame_1, text="Arquivos salvos",
+        select_label2 = Label(self.frame_1, text="Arquivos salvos",
                                  font=(self.font_2, 15, 'bold'), bg=self.color_2, fg=self.color_3)
-        select_pdf_label2.place(x=620, y=20)
+        select_label2.place(x=620, y=20)
 
         # Lista os arquivos já salvos no programa
-        self.PDF_List2 = Listbox(self.frame_1, font=(self.font_2, 10, 'bold'),
+        self.Arquivo_Lista2 = Listbox(self.frame_1, font=(self.font_2, 10, 'bold'),
                                 bg=self.color_2, fg=self.color_3,
                                 selectbackground=self.color_5, selectmode=MULTIPLE)
-        self.PDF_List2.place(x=620, y=50, width=500, height=440)
+        self.Arquivo_Lista2.place(x=620, y=50, width=500, height=440)
 
         # Barra de rolagem da caixa de arquivos
-        scrollbar2 = Scrollbar(self.PDF_List2, orient="vertical")
-        scrollbar2.config(command=self.PDF_List2.yview)
+        scrollbar2 = Scrollbar(self.Arquivo_Lista2, orient="vertical")
+        scrollbar2.config(command=self.Arquivo_Lista2.yview)
         scrollbar2.pack(side="right", fill="y")
         
     # Função para excluir itens da lista de arquivos    
     def delete_list_items(self):
-        selected_items = self.PDF_List.curselection()
+        selected_items = self.Arquivo_Lista.curselection()
         for index in selected_items[::-1]:
-            self.PDF_List.delete(index)
+            self.Arquivo_Lista.delete(index)
 
 #  Verifica se o script está sendo executado diretamente       
 if __name__ == "__main__":
