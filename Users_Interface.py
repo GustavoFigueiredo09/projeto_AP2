@@ -28,6 +28,7 @@ class Cactus_Fiscal:
         self.font_1 = "Helvetica"
         self.font_2 = "Times New Roman"
         self.font_3 = "trebuchet ms"
+        self.font_4 = "Arial"
 
         self.saving_location = ''
         self.PDF_path = []

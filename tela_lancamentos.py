@@ -4,6 +4,6 @@ def Tela_Lancamentos(instance):
     instance.ClearScreen()
 
     # Texto teste
-    select_label = Label(instance.frame_1, text="Testando tela Lançametos...",
+    select_label = Label(instance.frame_1, text="Bem-Vindo a tela Lançamentos",
                          font=(instance.font_2, 15, 'bold'), bg=instance.color_2, fg=instance.color_3)
     select_label.place(x=40, y=20)
