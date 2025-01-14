@@ -2,7 +2,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from functools import partial
-import customtkinter as ctk 
+import customtkinter as ctk # Customização da interface
 from tela_login import LoginScreen  # Importando a tela de login
 from tela_inicio import Tela_Inicio # Importando a tela Inicio
 from tela_lancamentos import Tela_Lancamentos # Importando a tela Lançamentos
@@ -10,6 +10,8 @@ from tela_relatorios import Tela_Relatorios # Importando a tela Relatorios
 from tela_cadastros import Tela_Cadastros # Importando a tela Cadastros
 from tela_arquivos import Tela_Arquivos # Importando a tela Arquivos
 from tela_emissao import Tela_Emissao # Importando a tela Emissão
+from cadastro_usuario import Cadastro_Usuario # Importa a tela de cadastro de usuários
+from cadastro_terceiros import Cadastro_Terceiros # Importa a tela de cadastro de terceiros
 
 class Cactus_Fiscal:
     def __init__(self, root):
@@ -37,7 +39,7 @@ class Cactus_Fiscal:
         # Menubar
         self.menubar = tk.Menu(self.window)
 
-        # Menu dinâmico
+        # Menu principal
         edit = tk.Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label='Menu', menu=edit)
         edit.add_command(label='Inicio', command=self.Home_Page)
@@ -46,7 +48,13 @@ class Cactus_Fiscal:
         edit.add_separator()
         edit.add_command(label='Relatórios', command=lambda: Tela_Relatorios(self))
         edit.add_separator()
-        edit.add_command(label='Cadastros', command=lambda: Tela_Cadastros(self))
+        
+        # Submenu de cadastros
+        cadastros_menu = tk.Menu(edit, tearoff=0)
+        cadastros_menu.add_command(label='Cadastro de Usuários', command=lambda: Cadastro_Usuario(self))
+        cadastros_menu.add_command(label='Cadastro de Terceiros', command=lambda: Cadastro_Terceiros(self))
+        edit.add_cascade(label='Cadastros', menu=cadastros_menu)
+
         edit.add_separator()
         edit.add_command(label='Arquivos', command=lambda: Tela_Arquivos(self))
         edit.add_separator()
