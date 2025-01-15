@@ -93,7 +93,7 @@ class Cactus_Fiscal:
 
     # Exibindo a janela sobre com as informações do projeto
     def AboutWindow(self):
-        messagebox.showinfo("Cactus Fiscal", "Cactus Fiscal 25.12.2024\nDeveloped by Tropa 2.0")
+        messagebox.showinfo("Cactus Fiscal", "Cactus Fiscal\nDeveloped by Tropa 2.0")
 
     # Limpando a tala
     def ClearScreen(self):
