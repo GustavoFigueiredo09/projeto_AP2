@@ -1,17 +1,17 @@
-import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from functools import partial
-import customtkinter as ctk # Customização da interface
+import customtkinter as ctk  # Customização da interface
+from PIL import Image, ImageTk  # Para carregar e exibir a imagem
 from tela_login import LoginScreen  # Importando a tela de login
-from tela_inicio import Tela_Inicio # Importando a tela Inicio
-from tela_lancamentos import Tela_Lancamentos # Importando a tela Lançamentos
-from tela_relatorios import Tela_Relatorios # Importando a tela Relatorios
-from tela_cadastros import Tela_Cadastros # Importando a tela Cadastros
-from tela_arquivos import Tela_Arquivos # Importando a tela Arquivos
-from tela_emissao import Tela_Emissao # Importando a tela Emissão
-from cadastro_usuario import Cadastro_Usuario # Importa a tela de cadastro de usuários
-from cadastro_terceiros import Cadastro_Terceiros # Importa a tela de cadastro de terceiros
+from tela_inicio import Tela_Inicio  # Importando a tela Inicio
+from tela_lancamentos import Tela_Lancamentos  # Importando a tela Lançamentos
+from tela_relatorios import Tela_Relatorios  # Importando a tela Relatorios
+from tela_cadastros import Tela_Cadastros  # Importando a tela Cadastros
+from tela_arquivos import Tela_Arquivos  # Importando a tela Arquivos
+from tela_emissao import Tela_Emissao  # Importando a tela Emissão
+from cadastro_usuario import Cadastro_Usuario  # Importa a tela de cadastro de usuários
+from cadastro_terceiros import Cadastro_Terceiros  # Importa a tela de cadastro de terceiros
 
 class Cactus_Fiscal:
     def __init__(self, root):
@@ -95,7 +95,7 @@ class Cactus_Fiscal:
     def AboutWindow(self):
         messagebox.showinfo("Cactus Fiscal", "Cactus Fiscal\nDeveloped by Tropa 2.0")
 
-    # Limpando a tala
+    # Limpando a tela
     def ClearScreen(self):
         for widget in self.frame_1.winfo_children():
             widget.destroy()
@@ -104,13 +104,20 @@ class Cactus_Fiscal:
     def Exit(self):
         self.window.destroy()
 
-    # Exibindo a tela inicial
+    # Exibindo a tela inicial com imagem
     def Home_Page(self):
         self.ClearScreen()  # Limpando a tela antes de mostrar a Home
 
-        # Elementos da tela inico
-        welcome_label = tk.Label(self.frame_1, text="Bem-vindo à Tela Inicial", font=(self.font_2, 20), bg=self.color_2)
-        welcome_label.pack(pady=50)
+        # Carregar a imagem
+        image_path = "images/image_inicio.jpg"  # Caminho para a sua imagem
+        img = Image.open(image_path)
+        img = img.resize((1220, 686))  # Ajustando o tamanho da imagem (opcional)
+        img_tk = ImageTk.PhotoImage(img)
+
+        # Exibindo a imagem na tela
+        img_label = tk.Label(self.frame_1, image=img_tk, bg=self.color_2)
+        img_label.image = img_tk  # Para manter uma referência à imagem
+        img_label.pack(pady=1)
 
     # Selecionando arquivos da memória
     def Select_Arquivo(self):
@@ -118,7 +125,7 @@ class Cactus_Fiscal:
                                                      title="Selecione um arquivo PDF", filetypes=(("PDF files", "*.pdf*"),))
         if selected_files:
             for path in selected_files:
-                self.Arquivo_Lista.insert(tk.END, path) # Insere o caminho dos arquivos na caixa de arquivos
+                self.Arquivo_Lista.insert(tk.END, path)  # Insere o caminho dos arquivos na caixa de arquivos
 
     # Exclui itens da lista de arquivos selecionados
     def delete_list_items(self):
@@ -131,10 +138,10 @@ def start_main_app():
     root.destroy()  # Fecha a tela de login
     main_root = tk.Tk()
     app = Cactus_Fiscal(main_root)
-    main_root.mainloop() # Loop pra interface após o login
+    main_root.mainloop()  # Loop pra interface após o login
 
 if __name__ == "__main__":
     # Tela de login
-    root = tk.Tk() # Janela pra tela de login
-    login = LoginScreen(root, on_login_success=start_main_app) # Criando a tela de login
-    root.mainloop() # Loop pra tela de login
+    root = tk.Tk()  # Janela pra tela de login
+    login = LoginScreen(root, on_login_success=start_main_app)  # Criando a tela de login
+    root.mainloop()  # Loop pra tela de login
