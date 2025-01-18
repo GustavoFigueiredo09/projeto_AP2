@@ -109,7 +109,7 @@ class Cactus_Fiscal:
         self.ClearScreen()  # Limpando a tela antes de mostrar a Home
 
         # Elementos da tela inico
-        welcome_label = tk.Label(self.frame_1, text="Bem-vindo à Tela Inicial", font=(self.font_1, 20), bg=self.color_2)
+        welcome_label = tk.Label(self.frame_1, text="Bem-vindo à Tela Inicial", font=(self.font_2, 20), bg=self.color_2)
         welcome_label.pack(pady=50)
 
     # Selecionando arquivos da memória

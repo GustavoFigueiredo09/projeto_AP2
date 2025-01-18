@@ -12,6 +12,6 @@ def Tela_Inicio(root):
     frame_1.grid(row=0, column=0, pady=1, padx=0, sticky=NSEW)
 
     # Adicionando um exemplo de interface
-    select_label = Label(frame_1, text="Testando tela de início...",
+    select_label = Label(frame_1, text=" tela de início...",
                          font=('Arial', 15, 'bold'), bg="white", fg="black")
     select_label.place(x=40, y=20)
