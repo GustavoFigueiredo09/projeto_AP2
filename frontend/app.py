@@ -12,6 +12,7 @@ from tela_arquivos import Tela_Arquivos  # Importando a tela Arquivos
 from tela_emissao import Tela_Emissao  # Importando a tela Emissão
 from cadastro_usuario import Cadastro_Usuario  # Importa a tela de cadastro de usuários
 from cadastro_terceiros import Cadastro_Terceiros  # Importa a tela de cadastro de terceiros
+from tela_contas import Tela_Contas
 
 class Cactus_Fiscal:
     def __init__(self, root):
@@ -57,6 +58,8 @@ class Cactus_Fiscal:
 
         edit.add_separator()
         edit.add_command(label='Arquivos', command=lambda: Tela_Arquivos(self))
+        edit.add_separator()
+        edit.add_command(label='Bancos', command=lambda: Tela_Contas(self))
         edit.add_separator()
         edit.add_command(label='Emissão', command=lambda: Tela_Emissao(self))
 
