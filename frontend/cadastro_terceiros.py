@@ -1,12 +1,34 @@
 from tkinter import *
+from tkinter import ttk
 
 def Cadastro_Terceiros(instance): 
     instance.ClearScreen()
 
-    # Texto teste
-    select_label = Label(instance.frame_1, text="Bem-Vindo a tela de cadastros de terceiros",
+    # Texto de boas-vindas
+    select_label = Label(instance.frame_1, text="Bem-Vindo à tela de cadastros de terceiros",
                          font=(instance.font_2, 15, 'bold'), bg=instance.color_2, fg=instance.color_3)
     select_label.place(x=40, y=20)
+
+    # Variável para armazenar a opção selecionada
+    selecionado = StringVar(value="Cliente")  # Valor inicial
+
+    # Função de callback para alternância
+    def alternar_opcao(*args):
+        print(f"Opção selecionada: {selecionado.get()}")
+        if selecionado.get() == "Cliente":
+            print("Configurações adicionais para Cliente.")
+        elif selecionado.get() == "Fornecedor":
+            print("Configurações adicionais para Fornecedor.")
+        elif selecionado.get() == "Transportadora":
+            print("Configurações padrão para Transportadora.")
+
+    # Vincular a função de callback à variável
+    selecionado.trace("w", alternar_opcao)
+
+    # Criando o OptionMenu
+    opcoes = ["Cliente", "Cliente", "Fornecedor", "Transportadora"]
+    dropdown = ttk.OptionMenu(instance.frame_1, selecionado, *opcoes)
+    dropdown.place(x=200, y=350)
 
     # Caixa de entrada para "Razão social"
     name_label = Label(instance.frame_1, text="Razão Social:",
@@ -52,9 +74,6 @@ def Cadastro_Terceiros(instance):
     email_label = Label(instance.frame_1, text="Categoria:",
         font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
     email_label.place(x=112, y=350)
-
-    email_entry = Entry(instance.frame_1, width=13, font=(instance.font_4, 14))
-    email_entry.place(x=200, y=350)
 
     # Caixa de entrada para "Código"
     email_label = Label(instance.frame_1, text="Código:",
