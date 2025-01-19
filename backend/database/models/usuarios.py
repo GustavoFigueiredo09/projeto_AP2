@@ -26,5 +26,5 @@ class Usuario(BaseCRUD):
 if __name__ == '__main__':
     # Exemplo de Uso, basta colocar o login e senha
     usuario = Usuario()
-    dados_dict = usuario.buscar_login_e_senha('maria.carla53', 26820)
+    dados_dict = usuario.buscar_login_e_senha('maia.carla53', 26820)
     print(dados_dict)

@@ -28,17 +28,21 @@ class BaseCRUD:
         comando_sql = f'SELECT {info} FROM {self.tabela} '
         if filtro:
             comando_sql += f'WHERE {filtro}'
+        try:
+            with self._conectar() as conn:
+                cursor = conn.cursor()
+                cursor.execute(comando_sql)
+                retorno = cursor.fetchall()
 
-        with self._conectar() as conn:
-            cursor = conn.cursor()
-            cursor.execute(comando_sql)
-            retorno = cursor.fetchall()
+                colunas = [desc[0] for desc in cursor.description]
+                dados_formatados = [dict(zip(colunas, linha)) for linha in retorno]
 
-            colunas = [desc[0] for desc in cursor.description]
-            dados_formatados = [dict(zip(colunas, linha)) for linha in retorno]
-
-            return dados_formatados      
-                                
+                return dados_formatados      
+            
+        except sq3.Error as e:
+            print(f'Erro no método read: {e}')
+            return None
+        
     # Atualiza
     def update(self, dados_dict, filtro):
         
