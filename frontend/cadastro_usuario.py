@@ -5,35 +5,32 @@ from tkinter import ttk
 def Cadastro_Usuario(instance): 
     instance.ClearScreen()
 
-    # Função de validação para permitir apenas números
+    # Restrigindo a entrar para aceitar apenas numeros
     def validar_entrada_numerica(char):
         return bool(re.match("[0-9]", char))
 
-    # Função para formatar a data no formato dd/mm/aaaa
+    # Formata a data no formato dd/mm/aaaa
     def formatar_data(event=None):
         valor = date_var.get()
         
-        # Remover qualquer caracter que não seja número
         valor = re.sub(r'\D', '', valor)
 
-        # Formatar a string no padrão dd/mm/aaaa
         if len(valor) > 2:
             valor = valor[:2] + '/' + valor[2:]
         if len(valor) > 5:
             valor = valor[:5] + '/' + valor[5:]
 
-        # Atualizar o campo de entrada com a data formatada
         date_var.set(valor)
 
-    # Texto teste
+    # Texto de boas-vindas
     select_label = Label(instance.frame_1, text="Bem-Vindo a tela de cadastros de usuários",
                          font=(instance.font_2, 15, 'bold'), bg=instance.color_2, fg=instance.color_3)
     select_label.place(x=40, y=20)
 
-    # Variável para armazenar a opção selecionada
-    selecionado = StringVar(value="Cliente")  # Valor inicial
+    # Armazenar a opção selecionada
+    selecionado = StringVar(value="Cliente")
 
-    # Função de callback para alternância
+    # Caixa de seleção
     def alternar_opcao(*args):
         print(f"Opção selecionada: {selecionado.get()}")
         if selecionado.get() == "Administrador":
@@ -41,7 +38,6 @@ def Cadastro_Usuario(instance):
         elif selecionado.get() == "Normal":
             print("Configurações adicionais para Normal.")
         
-    # Vincular a função de callback à variável
     selecionado.trace("w", alternar_opcao)
 
     # Caixa de entrada para "Nome completo"
@@ -65,14 +61,11 @@ def Cadastro_Usuario(instance):
                        font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
     date_label.place(x=40, y=200)
 
-    # Variável que armazena o valor da data
     date_var = StringVar()
 
-    # Associando a variável com o campo de entrada
     date_entry = Entry(instance.frame_1, textvariable=date_var, width=13, font=(instance.font_4, 14))
     date_entry.place(x=200, y=200)
 
-    # Monitorando a perda de foco (quando o usuário terminar de digitar)
     date_entry.bind("<FocusOut>", formatar_data)
 
     # Caixa de entrada para "Perfil"
@@ -113,7 +106,6 @@ def Cadastro_Usuario(instance):
         font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
     codigo_label.place(x=128, y=450)
 
-    # Comando de validação para número
     validate_cmd_numerico = instance.frame_1.register(validar_entrada_numerica)
 
     codigo_entry = Entry(instance.frame_1, width=10, font=(instance.font_4, 14), validate="key", validatecommand=(validate_cmd_numerico, "%S"))

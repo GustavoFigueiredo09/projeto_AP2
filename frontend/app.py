@@ -4,10 +4,8 @@ from functools import partial
 import customtkinter as ctk  # Customização da interface
 from PIL import Image, ImageTk  # Para carregar e exibir a imagem
 from tela_login import LoginScreen  # Importando a tela de login
-from tela_inicio import Tela_Inicio  # Importando a tela Inicio
 from tela_lancamentos import Tela_Lancamentos  # Importando a tela Lançamentos
-from tela_relatorios import Tela_Relatorios  # Importando a tela Relatorios
-from tela_cadastros import Tela_Cadastros  # Importando a tela Cadastros
+from tela_relatorios import Tela_Relatorios  # Importando a tela RelatoriosS
 from tela_arquivos import Tela_Arquivos  # Importando a tela Arquivos
 from tela_emissao import Tela_Emissao  # Importando a tela Emissão
 from cadastro_usuario import Cadastro_Usuario  # Importa a tela de cadastro de usuários
@@ -17,8 +15,8 @@ from tela_contas import Tela_Contas # importando a tela Contas Bancarias
 class Cactus_Fiscal:
     def __init__(self, root):
         self.window = root
-        self.window.geometry(self.centralizando_tela())  # Ajustando o tamanho da janela inicial
-        self.window.resizable(True, True)  # Permitindo redimensionamento da janela
+        self.window.geometry(self.centralizando_tela())  
+        self.window.resizable(True, True)
 
         # Cores
         self.color_1 = "white"  # Branco
@@ -40,7 +38,7 @@ class Cactus_Fiscal:
         # Menubar
         self.menubar = tk.Menu(self.window)
 
-        # Menu principal
+        # Menu principal parte 01
         edit = tk.Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label='Menu', menu=edit)
         edit.add_command(label='Inicio', command=self.Home_Page)
@@ -49,13 +47,12 @@ class Cactus_Fiscal:
         edit.add_separator()
         edit.add_command(label='Relatórios', command=lambda: Tela_Relatorios(self))
         edit.add_separator()
-        
         # Submenu de cadastros
         cadastros_menu = tk.Menu(edit, tearoff=0)
         cadastros_menu.add_command(label='Cadastro de Usuários', command=lambda: Cadastro_Usuario(self))
         cadastros_menu.add_command(label='Cadastro de Terceiros', command=lambda: Cadastro_Terceiros(self))
         edit.add_cascade(label='Cadastros', menu=cadastros_menu)
-
+        # Menu principal parte 02
         edit.add_separator()
         edit.add_command(label='Arquivos', command=lambda: Tela_Arquivos(self))
         edit.add_separator()
@@ -78,9 +75,9 @@ class Cactus_Fiscal:
 
         # Criando um Frame
         self.frame_1 = tk.Frame(self.window, bg=self.color_2)
-        self.frame_1.pack(fill="both", expand=True)  # Fazendo o frame preencher a janela
+        self.frame_1.pack(fill="both", expand=True)
 
-        self.Home_Page()  # Exibindo a tela inicial ao iniciar
+        self.Home_Page() 
 
         self.window.title('Cactus Fiscal')
 
@@ -109,17 +106,15 @@ class Cactus_Fiscal:
 
     # Exibindo a tela inicial com imagem
     def Home_Page(self):
-        self.ClearScreen()  # Limpando a tela antes de mostrar a Home
+        self.ClearScreen()
 
-        # Carregar a imagem
-        image_path = "images/image_inicio.jpg"  # Caminho para a sua imagem
+        image_path = "images/image_inicio.jpg" 
         img = Image.open(image_path)
-        img = img.resize((1220, 686))  # Ajustando o tamanho da imagem (opcional)
+        img = img.resize((1220, 686))
         img_tk = ImageTk.PhotoImage(img)
 
-        # Exibindo a imagem na tela
         img_label = tk.Label(self.frame_1, image=img_tk, bg=self.color_2)
-        img_label.image = img_tk  # Para manter uma referência à imagem
+        img_label.image = img_tk
         img_label.pack(pady=1)
 
     # Selecionando arquivos da memória
@@ -128,7 +123,7 @@ class Cactus_Fiscal:
                                                      title="Selecione um arquivo PDF", filetypes=(("PDF files", "*.pdf*"),))
         if selected_files:
             for path in selected_files:
-                self.Arquivo_Lista.insert(tk.END, path)  # Insere o caminho dos arquivos na caixa de arquivos
+                self.Arquivo_Lista.insert(tk.END, path) 
 
     # Exclui itens da lista de arquivos selecionados
     def delete_list_items(self):

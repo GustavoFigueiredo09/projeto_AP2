@@ -5,9 +5,8 @@ from tkinter import ttk
 def Cadastro_Terceiros(instance): 
     instance.ClearScreen()
 
-    # Função de validação para permitir apenas números
+    # Restrigindo a entrar para aceitar apenas numeros
     def validar_entrada_numerica(char):
-        # Expressão regular para permitir apenas números
         return bool(re.match("[0-9]", char))
 
     # Texto de boas-vindas
@@ -15,10 +14,10 @@ def Cadastro_Terceiros(instance):
                          font=(instance.font_2, 15, 'bold'), bg=instance.color_2, fg=instance.color_3)
     select_label.place(x=40, y=20)
 
-    # Variável para armazenar a opção selecionada
-    selecionado = StringVar(value="Cliente")  # Valor inicial
+    # Armazenar a opção selecionada
+    selecionado = StringVar(value="Cliente")  
 
-    # Função de callback para alternância
+    # Caixa de seleção
     def alternar_opcao(*args):
         print(f"Opção selecionada: {selecionado.get()}")
         if selecionado.get() == "Cliente":
@@ -28,7 +27,6 @@ def Cadastro_Terceiros(instance):
         elif selecionado.get() == "Transportadora":
             print("Configurações padrão para Transportadora.")
 
-    # Vincular a função de callback à variável
     selecionado.trace("w", alternar_opcao)
 
     # Caixa de entrada para "Razão social"
@@ -60,7 +58,7 @@ def Cadastro_Terceiros(instance):
         font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
     telefone_label.place(x=70, y=250)
 
-    # Criar variável de controle para validação de números
+    # Variável de controle para validação de números
     validate_cmd_numerico = instance.frame_1.register(validar_entrada_numerica)
 
     telefone_entry = Entry(instance.frame_1, width=13, font=(instance.font_4, 14), validate="key", validatecommand=(validate_cmd_numerico, "%S"))
