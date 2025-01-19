@@ -52,8 +52,15 @@ class BaseCRUD:
             conn.commit()
             return cursor.rowcount                                   
 
-    def delete(self):
-        ...
+    def delete(self, filtro):
+
+        sql = f'DELETE FROM {self.tabela} WHERE {filtro}'
+        print(sql)
+        with self._conectar() as conn:
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            conn.commit()
+
 
 
 
@@ -65,25 +72,26 @@ if __name__ == '__main__':
     
     usuario = usuarios('usuarios')
     
-    # usuario.create({'id_arquivos': 1, 
-    #                  'nome': 'Carlos', 
-    #                  'email': 'carlosmaia@gmail.com', 
-    #                  'login': 'carlos.maia05',
-    #                  'senha': 1235,
-    #                  'admin': 1})
+    usuario.create({'id_arquivos': 1, 
+                     'nome': 'Carlos', 
+                     'email': 'carlosmaia@gmail.com', 
+                     'login': 'carlos.maia05',
+                     'senha': 1235,
+                     'admin': 1})
 
 
-    # retorno = usuario.read(filtro='email LIKE "%mail.com"')
+    retorno = usuario.read(filtro='email LIKE "%mail.com"')
 
-    # for linha in retorno:
-    #     for coluna in linha:
-    #         print(coluna, end=' || ')
-    #     print()    
+    for linha in retorno:
+        for coluna in linha:
+            print(coluna, end=' || ')
+        print()    
     
-    # usuario.update({'id_arquivos': 3, 
-    #                  'nome': 'Maria', 
-    #                  'email': 'mariaCarla@hotmail.com', 
-    #                  'login': 'maria.carla53',
-    #                  'senha': 26820,
-    #                  'admin': 0}, 'id_usuario = 2')
+    usuario.update({'id_arquivos': 3, 
+                     'nome': 'Maria', 
+                     'email': 'mariaCarla@hotmail.com', 
+                     'login': 'maria.carla53',
+                     'senha': 26820,
+                     'admin': 0}, 'id_usuario = 2')
 
+    usuario.delete('id_usuario = 1')
