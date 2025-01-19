@@ -1,8 +1,14 @@
+import re
 from tkinter import *
 from tkinter import ttk
 
 def Cadastro_Terceiros(instance): 
     instance.ClearScreen()
+
+    # Função de validação para permitir apenas números
+    def validar_entrada_numerica(char):
+        # Expressão regular para permitir apenas números
+        return bool(re.match("[0-9]", char))
 
     # Texto de boas-vindas
     select_label = Label(instance.frame_1, text="Bem-Vindo à tela de cadastros de terceiros",
@@ -24,11 +30,6 @@ def Cadastro_Terceiros(instance):
 
     # Vincular a função de callback à variável
     selecionado.trace("w", alternar_opcao)
-
-    # Criando o OptionMenu
-    opcoes = ["Cliente", "Cliente", "Fornecedor", "Transportadora"]
-    dropdown = ttk.OptionMenu(instance.frame_1, selecionado, *opcoes)
-    dropdown.place(x=200, y=350)
 
     # Caixa de entrada para "Razão social"
     name_label = Label(instance.frame_1, text="Razão Social:",
@@ -55,33 +56,40 @@ def Cadastro_Terceiros(instance):
     name_entry.place(x=200, y=200)
 
     # Caixa de entrada para "Telefone/Celular"
-    email_label = Label(instance.frame_1, text="Telefone/Celular:",
+    telefone_label = Label(instance.frame_1, text="Telefone/Celular:",
         font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
-    email_label.place(x=70, y=250)
+    telefone_label.place(x=70, y=250)
 
-    email_entry = Entry(instance.frame_1, width=13, font=(instance.font_4, 14))
-    email_entry.place(x=200, y=250)
+    # Criar variável de controle para validação de números
+    validate_cmd_numerico = instance.frame_1.register(validar_entrada_numerica)
+
+    telefone_entry = Entry(instance.frame_1, width=13, font=(instance.font_4, 14), validate="key", validatecommand=(validate_cmd_numerico, "%S"))
+    telefone_entry.place(x=200, y=250)
 
     # Caixa de entrada para "CPF/CNPJ"
-    name_label = Label(instance.frame_1, text="CPF/CNPJ:",
+    cpf_cnpj_label = Label(instance.frame_1, text="CPF/CNPJ:",
         font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
-    name_label.place(x=105, y=300)
+    cpf_cnpj_label.place(x=105, y=300)
 
-    name_entry = Entry(instance.frame_1, width=20, font=(instance.font_4, 14))
-    name_entry.place(x=200, y=300)
+    cpf_cnpj_entry = Entry(instance.frame_1, width=20, font=(instance.font_4, 14), validate="key", validatecommand=(validate_cmd_numerico, "%S"))
+    cpf_cnpj_entry.place(x=200, y=300)
 
     # Caixa de entrada para "Categoria"
-    email_label = Label(instance.frame_1, text="Categoria:",
+    categoria_label = Label(instance.frame_1, text="Categoria:",
         font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
-    email_label.place(x=112, y=350)
+    categoria_label.place(x=112, y=350)
+
+    opcoes = ["Cliente", "Cliente", "Fornecedor", "Transportadora"]
+    dropdown = ttk.OptionMenu(instance.frame_1, selecionado, *opcoes)
+    dropdown.place(x=200, y=350)
 
     # Caixa de entrada para "Código"
-    email_label = Label(instance.frame_1, text="Código:",
+    codigo_label = Label(instance.frame_1, text="Código:",
         font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
-    email_label.place(x=128, y=400)
+    codigo_label.place(x=128, y=400)
 
-    email_entry = Entry(instance.frame_1, width=10, font=(instance.font_4, 14))
-    email_entry.place(x=200, y=400)
+    codigo_entry = Entry(instance.frame_1, width=10, font=(instance.font_4, 14), validate="key", validatecommand=(validate_cmd_numerico, "%S"))
+    codigo_entry.place(x=200, y=400)
 
     # Botão Salvar
     merge_button = Button(instance.frame_1, text="Salvar",
