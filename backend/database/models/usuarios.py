@@ -19,5 +19,12 @@ class Usuario(BaseCRUD):
     
     def busca_por_senha(self, senha, info='*'):
         return super().read(filtro=f'senha = {senha}')
+    
+    def buscar_login_e_senha(self, login, senha):
+        return super().read(filtro=f'login = "{login}" AND senha = {senha}')
 
-usuario = Usuario()
+if __name__ == '__main__':
+    # Exemplo de Uso, basta colocar o login e senha
+    usuario = Usuario()
+    dados_dict = usuario.buscar_login_e_senha('maria.carla53', 26820)
+    print(dados_dict)
