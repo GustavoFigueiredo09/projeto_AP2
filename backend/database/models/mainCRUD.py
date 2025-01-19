@@ -1,6 +1,6 @@
 import _sqlite3 as sq3
 
-
+# Não necessário mexer nesta pasta
 class BaseCRUD:
 
     def __init__(self, tabela, database='backend/database/database.db'): # Já tem um diretório padrão.
@@ -10,7 +10,7 @@ class BaseCRUD:
     # Inicia Conexão
     def _conectar(self):
         conn = sq3.connect('backend/database/database.db')
-        conn.execute('PRAGMA foreign_keys = ON;')
+        conn.execute('PRAGMA foreign_keys = OFF;')
         return conn
 
     # Insere Dados SELECT
@@ -22,11 +22,10 @@ class BaseCRUD:
         with self._conectar() as conn:
             cursor = conn.cursor()
             cursor.execute(f'INSERT INTO {self.tabela} ({colunas}) VALUES ({valores})', tuple(dados_dict.values()))
-
+            
     # Lê dados
     def read(self, info='*', filtro=None):                                            # Se quiser todos os dados da tabela, deixe info e filtro vazio
-
-        comando_sql = f'SELECT {info} FROM {self.tabela} '
+        comando_sql = f'SELECT {info} FROM {self.tabela}'
         if filtro:
             comando_sql += f'WHERE {filtro}'
 

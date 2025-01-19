@@ -56,7 +56,7 @@ class BancoInicializador:
                         id_arquivo INTEGER NOT NULL,
                         nome_arquivo TEXT NOT NULL,
                         arquivo BLOB NOT NULL,
-                        FOREIGN KEY (id_arquivo) REFERENCES users(id_arquivos));''')
+                        FOREIGN KEY (id_arquivo) REFERENCES usuarios(id_arquivos));''')
 
             print('Banco Inicializado com sucesso!')
 
