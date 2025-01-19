@@ -12,7 +12,7 @@ from tela_arquivos import Tela_Arquivos  # Importando a tela Arquivos
 from tela_emissao import Tela_Emissao  # Importando a tela Emissão
 from cadastro_usuario import Cadastro_Usuario  # Importa a tela de cadastro de usuários
 from cadastro_terceiros import Cadastro_Terceiros  # Importa a tela de cadastro de terceiros
-from tela_contas import Tela_Contas
+from tela_contas import Tela_Contas # importando a tela Contas Bancarias
 
 class Cactus_Fiscal:
     def __init__(self, root):
