@@ -1,18 +1,9 @@
 import _sqlite3 as sq3
 
 
-# COMO USAR PARA CRIAR NOVAS CLASSES
 class BaseCRUD:
-    # Crie uma nova classe HERDANDO a classe BaseCRUD
-    '''
-    EX.: 
-    class Usuarios(BaseCRUD):
-    def __init__(self):
-        super().__init__('usuarios')        Essa parte ditará qual tabela será manipulada login/arquivos/etc
-                                            
-    '''
 
-    def __init__(self, tabela, database='backend/database/database.db'): # Também tem o att database, que já tem um diretório padrão.
+    def __init__(self, tabela, database='backend/database/database.db'): # Já tem um diretório padrão.
         self.tabela = tabela
         self.database = database
         
@@ -22,6 +13,7 @@ class BaseCRUD:
         return conn
 
     def create(self, dados_dict):                                            # Registro deve receber os valores a serem digitados em DICT
+        
         colunas = ', '.join(dados_dict.keys())
         valores = ', '.join(['?' for i in dados_dict])
               
@@ -30,35 +22,36 @@ class BaseCRUD:
             cursor.execute(f'INSERT INTO {self.tabela} ({colunas}) VALUES ({valores})', tuple(dados_dict.values()))
     
     def read(self, filtro=None):                                            # Se quiser todos os dados da tabela, deixe o filtro vazio.
-        comando_sql = f'SELECT * FROM {self.tabela} '
 
+        comando_sql = f'SELECT * FROM {self.tabela} '
         if filtro:
             comando_sql += f'WHERE {filtro}'
 
         with self._conectar() as conn:
             cursor = conn.cursor()
             cursor.execute(comando_sql)
-            return cursor.fetchall()                                        # Retorno da pesquisa:  [ linha -> (1, coluna -> 'João', 30), (2, 'Maria', 25)]
+            return cursor.fetchall()                                        # Retorno:  [ linha -> (1, coluna -> 'João', 30), (2, 'Maria', 25)]
 
             
     def update(self, dados_dict, filtro):
         
         atualizacoes = ', '.join([f'{coluna} = ?' for coluna in dados_dict])
-        sql = f'UPDATE {self.tabela} SET {atualizacoes} WHERE {filtro}'
+        comando_sql = f'UPDATE {self.tabela} SET {atualizacoes} WHERE {filtro}'
 
         with self._conectar() as conn:
             cursor = conn.cursor()
-            cursor.execute(sql, tuple(dados_dict.values()))
+            cursor.execute(comando_sql, tuple(dados_dict.values()))
             conn.commit()
             return cursor.rowcount                                   
 
     def delete(self, filtro):
 
-        sql = f'DELETE FROM {self.tabela} WHERE {filtro}'
-        print(sql)
+        comando_sql = f'DELETE FROM {self.tabela} WHERE {filtro}'
+        print(comando_sql)
+
         with self._conectar() as conn:
             cursor = conn.cursor()
-            cursor.execute(sql)
+            cursor.execute(comando_sql)
             conn.commit()
 
 
@@ -66,10 +59,14 @@ class BaseCRUD:
 
 if __name__ == '__main__':
 
+    # Exemplo de uso: 
+
     class usuarios(BaseCRUD):
         def __init__(self, tabela):
             super().__init__(tabela)
     
+        # Criar quaisquer dados desejar para facilitar manipulação da tabela especifica.
+
     usuario = usuarios('usuarios')
     
     usuario.create({'id_arquivos': 1, 
