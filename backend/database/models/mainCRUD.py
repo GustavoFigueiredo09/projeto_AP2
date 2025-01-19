@@ -6,33 +6,41 @@ class BaseCRUD:
     def __init__(self, tabela, database='backend/database/database.db'): # Já tem um diretório padrão.
         self.tabela = tabela
         self.database = database
-        
+    
+    # Inicia Conexão
     def _conectar(self):
         conn = sq3.connect('backend/database/database.db')
         conn.execute('PRAGMA foreign_keys = ON;')
         return conn
 
+    # Insere Dados SELECT
     def create(self, dados_dict):                                            # Registro deve receber os valores a serem digitados em DICT
-        
+
         colunas = ', '.join(dados_dict.keys())
         valores = ', '.join(['?' for i in dados_dict])
               
         with self._conectar() as conn:
             cursor = conn.cursor()
             cursor.execute(f'INSERT INTO {self.tabela} ({colunas}) VALUES ({valores})', tuple(dados_dict.values()))
-    
-    def read(self, filtro=None):                                            # Se quiser todos os dados da tabela, deixe o filtro vazio.
 
-        comando_sql = f'SELECT * FROM {self.tabela} '
+    # Lê dados
+    def read(self, info='*', filtro=None):                                            # Se quiser todos os dados da tabela, deixe info e filtro vazio
+
+        comando_sql = f'SELECT {info} FROM {self.tabela} '
         if filtro:
             comando_sql += f'WHERE {filtro}'
 
         with self._conectar() as conn:
             cursor = conn.cursor()
             cursor.execute(comando_sql)
-            return cursor.fetchall()                                        # Retorno:  [ linha -> (1, coluna -> 'João', 30), (2, 'Maria', 25)]
+            retorno = cursor.fetchall()
 
-            
+            colunas = [desc[0] for desc in cursor.description]
+            dados_formatados = [dict(zip(colunas, linha)) for linha in retorno]
+
+            return dados_formatados      
+                                
+    # Atualiza
     def update(self, dados_dict, filtro):
         
         atualizacoes = ', '.join([f'{coluna} = ?' for coluna in dados_dict])
@@ -43,7 +51,7 @@ class BaseCRUD:
             cursor.execute(comando_sql, tuple(dados_dict.values()))
             conn.commit()
             return cursor.rowcount                                   
-
+    # Apaga
     def delete(self, filtro):
 
         comando_sql = f'DELETE FROM {self.tabela} WHERE {filtro}'
@@ -54,7 +62,18 @@ class BaseCRUD:
             cursor.execute(comando_sql)
             conn.commit()
 
+    # Comando customizado para demais tarefas
+    def custom_command(self, comando, parametros=None):
 
+        with self._conectar() as conn:
+            cursor = conn.cursor()
+            cursor.execute(comando, parametros or ())
+        
+        if comando.strip().upper().startswith("SELECT"):
+            return cursor.fetchall()  # Retornará dados da consulta
+        else:
+            conn.commit()  
+            return None
 
 
 if __name__ == '__main__':
@@ -65,7 +84,7 @@ if __name__ == '__main__':
         def __init__(self, tabela):
             super().__init__(tabela)
     
-        # Criar quaisquer dados desejar para facilitar manipulação da tabela especifica.
+    # Criar quaisquer dados desejar para facilitar manipulação da tabela especifica.
 
     usuario = usuarios('usuarios')
     
@@ -77,12 +96,14 @@ if __name__ == '__main__':
                      'admin': 1})
 
 
-    retorno = usuario.read(filtro='email LIKE "%mail.com"')
+    retorno = usuario.read()
+    '''
 
-    for linha in retorno:
-        for coluna in linha:
-            print(coluna, end=' || ')
-        print()    
+     Retorno:  [{'coluna1': #, 'coluna2': #},
+                {'coluna1': #, 'coluna2': #}]
+    '''
+    for val in retorno:
+        print(val)
     
     usuario.update({'id_arquivos': 3, 
                      'nome': 'Maria', 
