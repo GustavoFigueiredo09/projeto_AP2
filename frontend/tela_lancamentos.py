@@ -44,8 +44,8 @@ def Tela_Lancamentos(root):
         tipo_entry.delete(0,tk.END)
         desc_entry.delete(0,tk.END)
         
-
-
+    # def Excluir_Lançamento
+    
     # Botão para escanear
     btn_scanear = tk.Button(root.frame_1, text="Scanear", bg="#66CC33", fg="white", font=("Arial bold", 12), command=scanear)
     btn_scanear.place(x=890, y=70, width=100, height=25)

@@ -106,3 +106,19 @@ def Cadastro_Terceiros(instance):
                          font=(instance.font_3, 15, 'bold'), bg=instance.color_4, fg=instance.color_1,
                          width=12, command=instance.delete_list_items)
     save_button.place(x=750, y=540)
+
+    # Texto selecionar "Lista de cadastros"
+    select_label2 = Label(instance.frame_1, text="Lista de cadastros:",
+                          font=(instance.font_2, 15, 'bold'), bg=instance.color_2, fg=instance.color_3)
+    select_label2.place(x=750, y=50)
+
+    # Lista de cadastros ja feitos
+    instance.Arquivo_Lista2 = Listbox(instance.frame_1, font=(instance.font_2, 10, 'bold'),
+                                      bg=instance.color_2, fg=instance.color_3,
+                                      selectbackground=instance.color_5, selectmode=MULTIPLE)
+    instance.Arquivo_Lista2.place(x=750, y=90, width=400, height=420)
+
+    # Barra de rolagem da caixa de cadastros
+    scrollbar2 = Scrollbar(instance.Arquivo_Lista2, orient="vertical")
+    scrollbar2.config(command=instance.Arquivo_Lista2.yview)
+    scrollbar2.pack(side="right", fill="y")
