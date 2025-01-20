@@ -7,6 +7,7 @@ class Arquivo(BaseCRUD):
     def __init__(self):
         super().__init__(tabela='arquivos')
     
+    # Salva arquivo da pasta files no Banco de dados
     # Basta chamar metodo com o login do usuario e o path do arquivo, enviará o arquivo para o database.
     def create(self, usuario_login, nome_do_arquivo):
 
@@ -23,6 +24,7 @@ class Arquivo(BaseCRUD):
         dados_dict = {'id_arquivo': id_arquivo[0][0], 'nome_arquivo': caminho_arquivo, 'arquivo': arquivo_blob}
         return super().create(dados_dict)
         
+        # Retornam vários arquivos com o mesmo nome, ou apenas 1
     def busca_nome_do_arquivo(self, usuario_login):
         comando = f'SELECT id_arquivos FROM usuarios WHERE login LIKE ?'
         tupla_nome = (usuario_login,)
@@ -33,6 +35,7 @@ class Arquivo(BaseCRUD):
         return arquivos
         # Tipo de retorno: [{'nome_arquivo': 'teste.png'}, ...]
 
+        # Busca arquivo com nome especifico no banco e salva diretamente na pasta 'Files'
     def salva_arquivo_do_banco(self, usuario_login, nome_do_arquivo):
         
         comando = f'SELECT id_arquivos FROM usuarios WHERE login LIKE ?'
@@ -52,8 +55,9 @@ class Arquivo(BaseCRUD):
 
         # Retorno da pesquisa: [{'id_arquivo': 123, 'nome_arquivo': nome.pdf, 'arquivo': ARQUIVO_BLOB}, ...]
 
-    
-arq = Arquivo()
-# arq.create('maria.carla53', arquivo_path='backend/files/testepdf.pdf')
-# print(arq.busca_nome_do_arquivo('maria.carla53'))
-print(arq.salva_arquivo_do_banco('maria.carla53', 'testepdf.pdf'))
+
+if __name__ == '__main__':
+    arq = Arquivo()
+    arq.create('maria.carla53', arquivo_path='backend/files/testepdf.pdf')
+    print(arq.busca_nome_do_arquivo('maria.carla53'))
+    print(arq.salva_arquivo_do_banco('maria.carla53', 'testepdf.pdf'))
