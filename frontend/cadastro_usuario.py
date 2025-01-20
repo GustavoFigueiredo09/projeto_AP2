@@ -123,12 +123,6 @@ def Cadastro_Usuario(instance):
                            width=12, command=instance.delete_list_items)
     delete_button.place(x=550, y=540)
 
-    # Botão Consultar
-    save_button = Button(instance.frame_1, text="Consultar",
-                         font=(instance.font_3, 15, 'bold'), bg=instance.color_4, fg=instance.color_1,
-                         width=12, command=instance.delete_list_items)
-    save_button.place(x=750, y=540)
-
     # Texto selecionar "Lista de logins"
     select_label2 = Label(instance.frame_1, text="Lista de Logins:",
                           font=(instance.font_2, 15, 'bold'), bg=instance.color_2, fg=instance.color_3)
