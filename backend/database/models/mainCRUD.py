@@ -39,7 +39,7 @@ class BaseCRUD:
 
                 return dados_formatados      
             
-        except sq3.Error as e:
+        except Exception as e:
             print(f'Erro no método read: {e}')
             return None
         
