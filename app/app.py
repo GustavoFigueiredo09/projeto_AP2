@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from functools import partial
 import customtkinter as ctk  # Customização da interface
-from PIL import Image, ImageTk  # Para carregar e exibir a imagem
+from PIL import Image, ImageTk  # Para carregar e exibir imagem
 from tela_login import LoginScreen  # Importando a tela de login
 from tela_lancamentos import Tela_Lancamentos  # Importando a tela Lançamentos
 from tela_relatorios import Tela_Relatorios  # Importando a tela RelatoriosS

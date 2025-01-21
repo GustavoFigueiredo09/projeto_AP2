@@ -1,6 +1,6 @@
-import tkinter as tk
+import time
 from tkinter import messagebox
-import sys, os
+import tkinter as tk
 from backend.database.models.usuarios import Usuario
 
 class LoginScreen:
@@ -11,11 +11,14 @@ class LoginScreen:
         self.window.title("Login - Cactus Fiscal")
         self.window.configure(bg="#ffffef")
 
+        self.tentativas = 0  # Contador de tentativas
+        self.usuario_db = Usuario()
+
         # Frame principal
         self.frame_1 = tk.Frame(self.window, bg="#ffffef", width=1220, height=686)
         self.frame_1.place(x=0, y=0)
 
-        # Título da tela de login 
+        # Título da tela de login
         self.title_label = tk.Label(self.frame_1, text="Cactus Fiscal", font=("Times New Roman", 28, 'bold'),
                                     bg="#ffffef", fg="black")
         self.title_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
@@ -47,13 +50,42 @@ class LoginScreen:
         pos_y = (tela_altura // 2) - (janela_altura // 2)
         return f"{janela_largura}x{janela_altura}+{pos_x}+{pos_y}"
 
-    def validate_login(self):
-        username = self.user_entry.get() # input de Usuario
-        password = self.pass_entry.get() # input de senha
+    # Temporizador após tentativas e falhas
+    def temporizador(self, segundos):
+        for i in range(segundos, 0, -1):
+            self.user_entry.delete(0, tk.END)
+            self.pass_entry.delete(0, tk.END)
+            self.login_button.config(state=tk.DISABLED, text=f"Tente novamente em {i}s")
+            self.window.update()
+            time.sleep(1)
+        self.login_button.config(state=tk.NORMAL, text="Entrar")
 
-        # Verificando as credenciais pro acesso
-        if username == "admin" and password == "1234":  # Credenciais de login
-            messagebox.showinfo("Login bem-sucedido", "Bem-vindo ao Cactus Fiscal!") # Confirmando o login realizado
-            self.on_login_success() # chama a função que foi passada comoo parametro 
-        else:
-            messagebox.showerror("Erro de Login", "Usuário ou senha incorretos.") # Informando erro na tentativa de login
+    # Validação de login com tentativas
+    def validate_login(self):
+        username = self.user_entry.get()
+        password = self.pass_entry.get()
+
+        if not username or not password:
+            messagebox.showwarning("Erro", "Usuário e senha são obrigatórios.")
+            return
+
+        resultado = self.usuario_db.buscar_login_e_senha(username, password)
+
+        # Login bem-sucedido
+        if resultado:  
+            cargo = resultado[0].get('admin', 0)
+            if cargo == 1:
+                messagebox.showinfo("Login", f"Bem-vindo Administrador {username}!")
+                self.on_login_success()
+            else:
+                messagebox.showinfo("Login", f"Bem-vindo {username}!")
+                self.on_login_success()
+        # Login falhou
+        else:  
+            self.tentativas += 1
+            if self.tentativas >= 3:
+                messagebox.showerror("Erro", "Número máximo de tentativas. Aguarde 5 segundos.")
+                self.temporizador(5)
+                self.tentativas = 0
+            else:
+                messagebox.showerror("Erro", f"Usuário ou senha incorretos. Tentativa {self.tentativas}/3.")
