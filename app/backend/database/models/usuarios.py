@@ -1,5 +1,9 @@
-from mainCRUD import BaseCRUD
+if __name__ == '__main__':
+    from mainCRUD import BaseCRUD
+else:
+    from .mainCRUD import BaseCRUD
 
+    
 class Usuario(BaseCRUD):
 
     def __init__(self):

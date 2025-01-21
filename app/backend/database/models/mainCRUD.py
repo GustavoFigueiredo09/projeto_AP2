@@ -3,13 +3,13 @@ import _sqlite3 as sq3
 # Não necessário mexer nesta pasta
 class BaseCRUD:
 
-    def __init__(self, tabela, database='backend/database/database.db'): # Já tem um diretório padrão.
+    def __init__(self, tabela, database='app/backend/database/database.db'): # Já tem um diretório padrão.
         self.tabela = tabela
         self.database = database
     
     # Inicia Conexão
     def _conectar(self):
-        conn = sq3.connect('backend/database/database.db')
+        conn = sq3.connect('app/backend/database/database.db')
         conn.execute('PRAGMA foreign_keys = OFF;')
         return conn
 

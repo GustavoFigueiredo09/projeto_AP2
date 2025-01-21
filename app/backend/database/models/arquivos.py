@@ -1,4 +1,8 @@
-from mainCRUD import BaseCRUD
+if __name__ == '__main__':
+    from mainCRUD import BaseCRUD
+else:
+    from .mainCRUD import BaseCRUD
+    
 import os
 
 
@@ -16,12 +20,12 @@ class Arquivo(BaseCRUD):
         tupla_nome = (usuario_login,)
 
         id_arquivo = self.custom_command(comando, parametros=tupla_nome)
-        caminho_arquivo = os.path.abspath(f'backend/files/{nome_do_arquivo}')
+        caminho_arquivo = os.path.abspath(f'app/backend/files/{nome_do_arquivo}')
 
         with open(caminho_arquivo, "rb") as arquivo:
             arquivo_blob = arquivo.read()
 
-        dados_dict = {'id_arquivo': id_arquivo[0][0], 'nome_arquivo': caminho_arquivo, 'arquivo': arquivo_blob}
+        dados_dict = {'id_arquivo': id_arquivo[0][0], 'nome_arquivo': nome_do_arquivo, 'arquivo': arquivo_blob}
         return super().create(dados_dict)
         
         # Retornam vários arquivos com o mesmo nome, ou apenas 1
@@ -47,7 +51,7 @@ class Arquivo(BaseCRUD):
 
         if nome_do_arquivo:
             arquivo = [a['arquivo'] for a in arquivos if a['nome_arquivo'] == nome_do_arquivo] or None
-            caminho_arquivo = os.path.abspath(f'backend/files/{nome_do_arquivo}')
+            caminho_arquivo = os.path.abspath(f'app/backend/files/{nome_do_arquivo}')
 
             with open(caminho_arquivo, 'wb') as f:
                 f.write(arquivo[0])
@@ -58,6 +62,6 @@ class Arquivo(BaseCRUD):
 
 if __name__ == '__main__':
     arq = Arquivo()
-    arq.create('maria.carla53', arquivo_path='backend/files/testepdf.pdf')
+    arq.create('maria.carla53', nome_do_arquivo='testepdf.pdf')
     print(arq.busca_nome_do_arquivo('maria.carla53'))
     print(arq.salva_arquivo_do_banco('maria.carla53', 'testepdf.pdf'))
