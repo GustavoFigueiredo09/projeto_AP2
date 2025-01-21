@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
+import sys, os
+from backend.database.models.usuarios import Usuario
 
 class LoginScreen:
     def __init__(self, root, on_login_success):
@@ -46,7 +48,7 @@ class LoginScreen:
         return f"{janela_largura}x{janela_altura}+{pos_x}+{pos_y}"
 
     def validate_login(self):
-        username = self.user_entry.get() # input de usuario
+        username = self.user_entry.get() # input de Usuario
         password = self.pass_entry.get() # input de senha
 
         # Verificando as credenciais pro acesso
