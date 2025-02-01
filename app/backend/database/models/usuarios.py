@@ -26,7 +26,15 @@ class Usuario(BaseCRUD):
     
     def buscar_login_e_senha(self, login, senha):
         return super().read(filtro=f'login = "{login}" AND senha = {senha}')
+    
+    def registra_usuarios(self, dados_dict):
+        super().create(dados_dict)
 
+        # entrada: [{nome: 'maria', senha: 12}, {nome: 'carlos', senha: 1235}, ...]
+    def registra_multiplos_usuarios(self, usuarios):
+        for usuario in usuarios:
+            super().create(usuario)
+            
     # OBS.: TODOS os metodos retornam uma lista com dicionarios ex: [{maria, 12, 55, admin}, {carlos, 23, 44, user}, ...]
 
 if __name__ == '__main__':
