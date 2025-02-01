@@ -2,7 +2,7 @@ import sqlite3 as sq3
 
 # OBS.: Classe so deve ser chamada na inicialização ou na falta/erro de tabelas
 
-class BancoInicializador:
+class Config:
     # Inicialização
     def __init__(self, databasepath):
         self.database_path = databasepath
@@ -30,7 +30,7 @@ class BancoInicializador:
             print(f'Log: falha ao gerar banco: {e}')
             return f'Log: falha ao gerar banco: {e}'
 
-    def limpa_usuarios(self):
+    def inicia_tabela_usuarios(self):
 
 
         sql_file_path = 'app/backend/database/config/users.sql'
@@ -41,9 +41,19 @@ class BancoInicializador:
             cursor = conn.cursor()
             cursor.executescript(sql_script)
             
+    def inicia_tabela_lancamentos(self):
+
+        sql_file_path = 'app/backend/database/config/lancamentos.sql'
+        with open(sql_file_path, 'r', encoding='utf-8') as file:
+            sql_script = file.read()
+
+        with self._conectar() as conn:
+            cursor = conn.cursor()
+            cursor.executescript(sql_script)
 
 # Só para testes, chamar função na inicialização
 if __name__ == '__main__':
-    inicio = BancoInicializador('backend\database\database.db')
+    inicio = Config('backend\database\database.db')
     inicio.inicializador()
-    # inicio.limpa_usuarios()
+    inicio.inicia_tabela_lancamentos()
+    #inicio.inicia_tabela_usuarios()
