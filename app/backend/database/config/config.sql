@@ -31,3 +31,7 @@ CREATE TABLE IF NOT EXISTS arquivos (
                         nome_arquivo TEXT NOT NULL,
                         arquivo BLOB NOT NULL,
                         FOREIGN KEY (id_arquivo) REFERENCES usuarios(id_arquivos));
+
+
+-- DELETE FROM arquivos;
+-- DELETE FROM sqlite_sequence WHERE name = 'arquivos';

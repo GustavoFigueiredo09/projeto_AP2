@@ -1,6 +1,7 @@
 DELETE FROM usuarios;
 DELETE FROM sqlite_sequence WHERE name = 'usuarios';
 
+
 INSERT INTO usuarios (id_arquivos, nome, email, login, senha, admin) VALUES (101, 'João Silva', 'joao.silva@email.com', 'joao.silva34', 873194625, 1);
 INSERT INTO usuarios (id_arquivos, nome, email, login, senha, admin) VALUES (102, 'Maria Oliveira', 'maria.oliveira@email.com', 'maria.oliveira67', 453216789, 0);
 INSERT INTO usuarios (id_arquivos, nome, email, login, senha, admin) VALUES (103, 'Carlos Pereira', 'carlos.pereira@email.com', 'carlos.pereira89', 192874536, 1);
@@ -11,3 +12,6 @@ INSERT INTO usuarios (id_arquivos, nome, email, login, senha, admin) VALUES (107
 INSERT INTO usuarios (id_arquivos, nome, email, login, senha, admin) VALUES (108, 'Fernanda Lima', 'fernanda.lima@email.com', 'fernanda.lima56', 762894315, 0);
 INSERT INTO usuarios (id_arquivos, nome, email, login, senha, admin) VALUES (109, 'Ricardo Souza', 'ricardo.souza@email.com', 'ricardo.souza92', 319682547, 1);
 INSERT INTO usuarios (id_arquivos, nome, email, login, senha, admin) VALUES (110, 'Larissa Martins', 'larissa.martins@email.com', 'larissa.martins34', 874513926, 0);
+
+INSERT INTO usuarios (id_arquivos, nome, email, login, senha, admin) VALUES (111, 'Administrador', 'adm@cactus.fiscal.br', 'admin', 1234, 1);
+INSERT INTO usuarios (id_arquivos, nome, email, login, senha, admin) VALUES (112, 'Usuário', 'usuario@cactus.fiscal.br', 'user', 1234, 0);

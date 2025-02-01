@@ -46,4 +46,4 @@ class BancoInicializador:
 if __name__ == '__main__':
     inicio = BancoInicializador('backend\database\database.db')
     inicio.inicializador()
-    inicio.limpa_usuarios()
+    # inicio.limpa_usuarios()
