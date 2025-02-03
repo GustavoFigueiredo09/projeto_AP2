@@ -25,6 +25,12 @@ class Cactus_Fiscal:
         self.color_4 = "#67a516"  # Verde Claro
         self.color_5 = "#ff914d"  # Laranja
 
+        # Fontes
+        self.font_1 = "Helvetica"
+        self.font_2 = "Times New Roman"
+        self.font_3 = "trebuchet ms"
+        self.font_4 = "Arial"
+
         # Menubar
         self.menubar = tk.Menu(self.window)
 
@@ -85,6 +91,20 @@ class Cactus_Fiscal:
     def ClearScreen(self):
         for widget in self.frame_1.winfo_children():
             widget.destroy()
+
+    # Selecionando arquivos da memória
+    def Select_Arquivo(self):
+        selected_files = filedialog.askopenfilenames(initialdir="/",
+                                                     title="Selecione um arquivo PDF", filetypes=(("PDF files", "*.pdf*"),))
+        if selected_files:
+            for path in selected_files:
+                print(path) 
+
+    # Exclui itens da lista de arquivos selecionados
+    def delete_list_items(self):
+        selected_items = self.Arquivo_Lista.curselection()
+        for index in selected_items[::-1]:
+            self.Arquivo_Lista.delete(index)
 
     # Saindo do sistema após clicar no botão "sair" com confirmação
     def Exit(self):
