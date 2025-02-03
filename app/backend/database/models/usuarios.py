@@ -3,7 +3,6 @@ if __name__ == '__main__':
 else:
     from .mainCRUD import BaseCRUD
 
-    
 class Usuario(BaseCRUD):
 
     def __init__(self):
@@ -19,7 +18,7 @@ class Usuario(BaseCRUD):
         return super().read(info=info, filtro='admin = 0')
     
     def busca_por_nome(self, nome, info='*'):
-        return super().read(filtro=f'nome = {nome}')
+        return super().read(filtro=f'nome LIKE "%{nome}%"')
     
     def busca_por_senha(self, senha, info='*'):
         return super().read(filtro=f'senha = {senha}')
@@ -29,8 +28,7 @@ class Usuario(BaseCRUD):
     
     def registra_usuarios(self, dados_dict):
         super().create(dados_dict)
-
-        # entrada: [{nome: 'maria', senha: 12}, {nome: 'carlos', senha: 1235}, ...]
+        
     def registra_multiplos_usuarios(self, usuarios):
         for usuario in usuarios:
             super().create(usuario)

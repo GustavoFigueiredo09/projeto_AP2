@@ -1,30 +1,27 @@
-import _sqlite3 as sq3
+import _sqlite3 as sq3 
 
-# Não necessário mexer nesta pasta
 class BaseCRUD:
 
-    def __init__(self, tabela, database='app/backend/database/database.db'): # Já tem um diretório padrão.
+    def __init__(self, tabela, database='app/backend/database/database.db'): 
         self.tabela = tabela
         self.database = database
     
     # Inicia Conexão
     def _conectar(self):
-        conn = sq3.connect('app/backend/database/database.db')
+        conn = sq3.connect(self.database)
         conn.execute('PRAGMA foreign_keys = OFF;')
         return conn
 
-    # Insere Dados SELECT
-    def create(self, dados_dict):                                            # Registro deve receber os valores a serem digitados em DICT
-
+    # Insere Dados
+    def create(self, dados_dict):
         colunas = ', '.join(dados_dict.keys())
         valores = ', '.join(['?' for i in dados_dict])
-              
         with self._conectar() as conn:
             cursor = conn.cursor()
             cursor.execute(f'INSERT INTO {self.tabela} ({colunas}) VALUES ({valores})', tuple(dados_dict.values()))
 
     # Lê dados
-    def read(self, info='*', filtro=None):                                            # Se quiser todos os dados da tabela, deixe info e filtro vazio
+    def read(self, info='*', filtro=None):  # Se quiser todos os dados da tabela, deixe info e filtro vazio
         comando_sql = f'SELECT {info} FROM {self.tabela} '
         if filtro:
             comando_sql += f'WHERE {filtro}'
@@ -37,15 +34,13 @@ class BaseCRUD:
                 colunas = [desc[0] for desc in cursor.description]
                 dados_formatados = [dict(zip(colunas, linha)) for linha in retorno]
 
-                return dados_formatados      
-            
+                return dados_formatados
         except Exception as e:
             print(f'Erro no método read: {e}')
-            return None
-        
+            return []  # Retorna lista vazia em caso de erro
+
     # Atualiza
     def update(self, dados_dict, filtro):
-        
         atualizacoes = ', '.join([f'{coluna} = ?' for coluna in dados_dict])
         comando_sql = f'UPDATE {self.tabela} SET {atualizacoes} WHERE {filtro}'
 
@@ -53,13 +48,11 @@ class BaseCRUD:
             cursor = conn.cursor()
             cursor.execute(comando_sql, tuple(dados_dict.values()))
             conn.commit()
-            return cursor.rowcount                                   
+            return cursor.rowcount
+    
     # Apaga
     def delete(self, filtro):
-
         comando_sql = f'DELETE FROM {self.tabela} WHERE {filtro}'
-        print(comando_sql)
-
         with self._conectar() as conn:
             cursor = conn.cursor()
             cursor.execute(comando_sql)
@@ -67,17 +60,14 @@ class BaseCRUD:
 
     # Comando customizado para demais tarefas
     def custom_command(self, comando, parametros=None):
-
         with self._conectar() as conn:
             cursor = conn.cursor()
             cursor.execute(comando, parametros or ())
-        
         if comando.strip().upper().startswith("SELECT"):
-            return cursor.fetchall()  # Retornará dados da consulta
+            return cursor.fetchall()
         else:
-            conn.commit()  
+            conn.commit()
             return None
-
 
 if __name__ == '__main__':
 

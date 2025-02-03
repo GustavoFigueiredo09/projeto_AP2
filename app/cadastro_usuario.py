@@ -1,140 +1,104 @@
 import re
 from tkinter import *
 from tkinter import ttk
+from backend.database.models.usuarios import Usuario  # Importar a classe Usuario
 
 def Cadastro_Usuario(instance): 
     instance.ClearScreen()
 
-    # Restrigindo a entrar para aceitar apenas numeros
-    def validar_entrada_numerica(char):
-        return bool(re.match("[0-9]", char))
-
-    # Formata a data no formato dd/mm/aaaa
-    def formatar_data(event=None):
-        valor = date_var.get()
-        
-        valor = re.sub(r'\D', '', valor)
-
-        if len(valor) > 2:
-            valor = valor[:2] + '/' + valor[2:]
-        if len(valor) > 5:
-            valor = valor[:5] + '/' + valor[5:]
-
-        date_var.set(valor)
-
     # Texto de boas-vindas
-    select_label = Label(instance.frame_1, text="Bem-Vindo a tela de cadastros de usuários",
+    select_label = Label(instance.frame_1, text="Cadastros de usuários",
                          font=(instance.font_2, 15, 'bold'), bg=instance.color_2, fg=instance.color_3)
     select_label.place(x=40, y=20)
 
-    # Armazenar a opção selecionada
-    selecionado = StringVar(value="Cliente")
+    # Caixa de pesquisa
+    search_label = Label(instance.frame_1, text="Pesquisar:",
+                         font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
+    search_label.place(x=335, y=60)
 
-    # Caixa de seleção
-    def alternar_opcao(*args):
-        print(f"Opção selecionada: {selecionado.get()}")
-        if selecionado.get() == "Administrador":
-            print("Configurações adicionais para Administrador.")
-        elif selecionado.get() == "Normal":
-            print("Configurações adicionais para Normal.")
-        
-    selecionado.trace("w", alternar_opcao)
+    search_entry = Entry(instance.frame_1, width=30, font=(instance.font_4, 14))
+    search_entry.place(x=420, y=60)
 
-    # Caixa de entrada para "Nome completo"
-    name_label = Label(instance.frame_1, text="Nome completo:",
-        font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
-    name_label.place(x=70, y=100)
+    # Tabela de Usuários
+    tree = ttk.Treeview(instance.frame_1, columns=("Nome", "Email", "Login", "Senha", "Categoria"), show="headings")
+    tree.heading("Nome", text="Nome")
+    tree.heading("Email", text="Email")
+    tree.heading("Login", text="Login")
+    tree.heading("Senha", text="Senha")
+    tree.heading("Categoria", text="Categoria")
 
-    name_entry = Entry(instance.frame_1, width=40, font=(instance.font_4, 14))
-    name_entry.place(x=200, y=100)
+    tree.column("Nome", width=200)
+    tree.column("Email", width=200)
+    tree.column("Login", width=150)
+    tree.column("Senha", width=150)
+    tree.column("Categoria", width=100)
 
-    # Caixa de entrada para "Email"
-    email_label = Label(instance.frame_1, text="Email:",
-        font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
-    email_label.place(x=138, y=150)
+    tree.place(x=120, y=100, width=950, height=400)
 
-    email_entry = Entry(instance.frame_1, width=40, font=(instance.font_4, 14))
-    email_entry.place(x=200, y=150)
+    def carregar_dados_tabela(filtro=None):
+        # Criar uma instância da classe Usuario
+        usuario = Usuario()
 
-    # Caixa de entrada para "Data de Nascimento"
-    date_label = Label(instance.frame_1, text="Data de nascimento:",
-                       font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
-    date_label.place(x=40, y=200)
+        # Consultar todos os usuários ou filtrar por nome
+        dados_usuarios = usuario.busca_todos() if filtro is None else usuario.busca_por_nome(filtro)
 
-    date_var = StringVar()
+        # Limpar a tabela antes de inserir os novos dados
+        for item in tree.get_children():
+            tree.delete(item)
 
-    date_entry = Entry(instance.frame_1, textvariable=date_var, width=13, font=(instance.font_4, 14))
-    date_entry.place(x=200, y=200)
+        # Inserir os dados na tabela
+        for usuario in dados_usuarios:
+            tree.insert("", "end", values=(usuario['nome'], usuario['email'], usuario['login'], usuario['senha'], "Administrador" if usuario['admin'] == 1 else "Normal"))
 
-    date_entry.bind("<FocusOut>", formatar_data)
+    def filtrar_por_nome():
+        nome_busca = search_entry.get().lower()
+        if nome_busca:
+            # Chama a função de carregar dados filtrados
+            carregar_dados_tabela(nome_busca)
+        else:
+            # Se o campo estiver vazio, carregar todos os dados
+            carregar_dados_tabela()
 
-    # Caixa de entrada para "Perfil"
-    profile_label = Label(instance.frame_1, text="Perfil:",
-        font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
-    profile_label.place(x=142, y=250)
+    # Botão de buscar
+    search_button = Button(instance.frame_1, text="Buscar", font=(instance.font_4, 12), command=filtrar_por_nome)
+    search_button.place(x=770, y=55)
 
-    opcoes = ["Administrador", "Administrador", "Normal"]
-    dropdown = ttk.OptionMenu(instance.frame_1, selecionado, *opcoes)
-    dropdown.place(x=200, y=250)
+    # Carregar todos os dados ao iniciar
+    carregar_dados_tabela()  # Carregar todos os dados na tabela ao iniciar
 
-    # Caixa de entrada para "Login"
-    login_label = Label(instance.frame_1, text="Login:",
-        font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
-    login_label.place(x=139, y=300)
+    # Função para adicionar um novo usuário
+    def novo_usuario():
+        # Aqui você pode abrir uma nova tela ou realizar a inserção diretamente
+        print("Abrir formulário para adicionar um novo usuário.")
 
-    login_entry = Entry(instance.frame_1, width=20, font=(instance.font_4, 14))
-    login_entry.place(x=200, y=300)
+    # Função para editar um usuário
+    def editar_usuario():
+        selected_item = tree.selection()
+        if selected_item:
+            item_values = tree.item(selected_item, "values")
+            print(f"Editar usuário: {item_values}")
+            # Aqui você pode abrir um formulário para editar os dados do usuário selecionado
 
-    # Caixa de entrada para "Senha"
-    password_label = Label(instance.frame_1, text="Senha:",
-        font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
-    password_label.place(x=135, y=350)
+    # Função para remover um usuário
+    def remover_usuario():
+        selected_item = tree.selection()
+        if selected_item:
+            item_values = tree.item(selected_item, "values")
+            usuario = Usuario()
+            usuario.busca_por_nome(item_values[0])  # Filtrar pelo nome para encontrar o ID
+            # Agora, você pode remover o usuário da base de dados
+            print(f"Remover usuário: {item_values}")
+            # Remover da tabela (remover do banco de dados)
+            usuario.delete(f"nome = '{item_values[0]}'")
+            # Atualizar a tabela
+            carregar_dados_tabela()
 
-    password_entry = Entry(instance.frame_1, width=13, font=(instance.font_4, 14), show="*")
-    password_entry.place(x=200, y=350)
+    # Botões de ações
+    novo_button = Button(instance.frame_1, text=" + Novo", font=(instance.font_4, 12), command=novo_usuario)
+    novo_button.place(x=475, y=550)
 
-    # Caixa de entrada para "Repetir senha"
-    repeat_password_label = Label(instance.frame_1, text="Repetir senha:",
-        font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
-    repeat_password_label.place(x=82, y=400)
+    editar_button = Button(instance.frame_1, text="Editar", font=(instance.font_4, 12), command=editar_usuario)
+    editar_button.place(x=580, y=550)
 
-    repeat_password_entry = Entry(instance.frame_1, width=13, font=(instance.font_4, 14), show="*")
-    repeat_password_entry.place(x=200, y=400)
-
-    # Caixa de entrada para "Código"
-    codigo_label = Label(instance.frame_1, text="Código:",
-        font=(instance.font_4, 12), bg=instance.color_2, fg=instance.color_3)
-    codigo_label.place(x=128, y=450)
-
-    validate_cmd_numerico = instance.frame_1.register(validar_entrada_numerica)
-
-    codigo_entry = Entry(instance.frame_1, width=10, font=(instance.font_4, 14), validate="key", validatecommand=(validate_cmd_numerico, "%S"))
-    codigo_entry.place(x=200, y=450)
-
-    # Botão Salvar
-    merge_button = Button(instance.frame_1, text="Salvar",
-                          font=(instance.font_3, 15, 'bold'), bg=instance.color_4, fg=instance.color_1,
-                          width=12, command=instance.Select_Arquivo)
-    merge_button.place(x=350, y=540)
-
-    # Botão Excluir
-    delete_button = Button(instance.frame_1, text="Excluir",
-                           font=(instance.font_3, 15, 'bold'), bg=instance.color_4, fg=instance.color_1,
-                           width=12, command=instance.delete_list_items)
-    delete_button.place(x=550, y=540)
-
-    # Texto selecionar "Lista de logins"
-    select_label2 = Label(instance.frame_1, text="Lista de Logins:",
-                          font=(instance.font_2, 15, 'bold'), bg=instance.color_2, fg=instance.color_3)
-    select_label2.place(x=750, y=50)
-
-    # Lista os Logins
-    instance.Arquivo_Lista2 = Listbox(instance.frame_1, font=(instance.font_2, 10, 'bold'),
-                                      bg=instance.color_2, fg=instance.color_3,
-                                      selectbackground=instance.color_5, selectmode=MULTIPLE)
-    instance.Arquivo_Lista2.place(x=750, y=90, width=400, height=420)
-
-    # Barra de rolagem da caixa de logins
-    scrollbar2 = Scrollbar(instance.Arquivo_Lista2, orient="vertical")
-    scrollbar2.config(command=instance.Arquivo_Lista2.yview)
-    scrollbar2.pack(side="right", fill="y")
+    remover_button = Button(instance.frame_1, text="Remover", font=(instance.font_4, 12), command=remover_usuario)
+    remover_button.place(x=675, y=550)
