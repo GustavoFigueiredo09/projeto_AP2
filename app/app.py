@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from functools import partial
 import customtkinter as ctk  # Customização da interface
-from PIL import Image, ImageTk  # Para carregar e exibir imagem
+from PIL import Image, ImageTk  # Para carregar e exibir a imagem
 from tela_login import LoginScreen  # Importando a tela de login
 from tela_lancamentos import Tela_Lancamentos  # Importando a tela Lançamentos
 from tela_relatorios import Tela_Relatorios  # Importando a tela RelatoriosS
@@ -25,20 +25,10 @@ class Cactus_Fiscal:
         self.color_4 = "#67a516"  # Verde Claro
         self.color_5 = "#ff914d"  # Laranja
 
-        # Fontes
-        self.font_1 = "Helvetica"
-        self.font_2 = "Times New Roman"
-        self.font_3 = "trebuchet ms"
-        self.font_4 = "Arial"
-
-        self.saving_location = ''
-        self.PDF_path = []
-        self.Arquivo_Lista = None
-
         # Menubar
         self.menubar = tk.Menu(self.window)
 
-        # Menu principal parte 01
+        # Menu principal
         edit = tk.Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label='Menu', menu=edit)
         edit.add_command(label='Inicio', command=self.Home_Page)
@@ -47,30 +37,26 @@ class Cactus_Fiscal:
         edit.add_separator()
         edit.add_command(label='Relatórios', command=lambda: Tela_Relatorios(self))
         edit.add_separator()
+        
         # Submenu de cadastros
         cadastros_menu = tk.Menu(edit, tearoff=0)
         cadastros_menu.add_command(label='Cadastro de Usuários', command=lambda: Cadastro_Usuario(self))
         cadastros_menu.add_command(label='Cadastro de Terceiros', command=lambda: Cadastro_Terceiros(self))
         edit.add_cascade(label='Cadastros', menu=cadastros_menu)
-        # Menu principal parte 02
+        
         edit.add_separator()
         edit.add_command(label='Arquivos', command=lambda: Tela_Arquivos(self))
         edit.add_separator()
         edit.add_command(label='Bancos', command=lambda: Tela_Contas(self))
         edit.add_separator()
         edit.add_command(label='Emissão', command=lambda: Tela_Emissao(self))
-
-        # Sobre
-        about = tk.Menu(self.menubar, tearoff=0)
-        self.menubar.add_cascade(label='Sobre', menu=about)
-        about.add_command(label='Sobre', command=self.AboutWindow)
-
-        # Saída
-        exit = tk.Menu(self.menubar, tearoff=0)
-        self.menubar.add_cascade(label='Sair', menu=exit)
-        exit.add_command(label='Sair', command=self.Exit)
-
+        
+        # Sobre dentro do menu principal
+        edit.add_separator()
+        edit.add_command(label='Sobre', command=self.AboutWindow)
+        
         # Configuração do menubar
+        self.menubar.add_command(label='Sair', command=self.Exit)
         self.window.config(menu=self.menubar)
 
         # Criando um Frame
@@ -100,9 +86,10 @@ class Cactus_Fiscal:
         for widget in self.frame_1.winfo_children():
             widget.destroy()
 
-    # Saindo do sistema após clicar no botão "sair"
+    # Saindo do sistema após clicar no botão "sair" com confirmação
     def Exit(self):
-        self.window.destroy()
+        if messagebox.askyesno("Confirmação", "Tem certeza que deseja sair?"):
+            self.window.destroy()
 
     # Exibindo a tela inicial com imagem
     def Home_Page(self):
@@ -117,29 +104,15 @@ class Cactus_Fiscal:
         img_label.image = img_tk
         img_label.pack(pady=1)
 
-    # Selecionando arquivos da memória
-    def Select_Arquivo(self):
-        selected_files = filedialog.askopenfilenames(initialdir="/",
-                                                     title="Selecione um arquivo PDF", filetypes=(("PDF files", "*.pdf*"),))
-        if selected_files:
-            for path in selected_files:
-                self.Arquivo_Lista.insert(tk.END, path) 
-
-    # Exclui itens da lista de arquivos selecionados
-    def delete_list_items(self):
-        selected_items = self.Arquivo_Lista.curselection()
-        for index in selected_items[::-1]:
-            self.Arquivo_Lista.delete(index)
-
 # Iniciando a aplicação após o login
 def start_main_app():
     root.destroy()  # Fecha a tela de login
     main_root = tk.Tk()
     app = Cactus_Fiscal(main_root)
-    main_root.mainloop()  # Loop pra interface após o login
+    main_root.mainloop()
 
 if __name__ == "__main__":
     # Tela de login
     root = tk.Tk()  # Janela pra tela de login
     login = LoginScreen(root, on_login_success=start_main_app)  # Criando a tela de login
-    root.mainloop()  # Loop pra tela de login
+    root.mainloop()
