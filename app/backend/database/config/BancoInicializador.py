@@ -56,4 +56,4 @@ if __name__ == '__main__':
     inicio = Config('backend\database\database.db')
     inicio.inicializador()
     inicio.inicia_tabela_lancamentos()
-    #inicio.inicia_tabela_usuarios()
+    inicio.inicia_tabela_usuarios()

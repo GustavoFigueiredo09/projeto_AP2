@@ -9,7 +9,7 @@ def Cadastro_Usuario(instance):
 
     # Texto de boas-vindas
     select_label = Label(instance.frame_1, text="Cadastros de usuários",
-                         font=(instance.font_2, 15, 'bold'), bg=instance.color_2, fg=instance.color_3)
+                         font=(instance.font_4, 15, 'bold'), bg=instance.color_2, fg=instance.color_3)
     select_label.place(x=40, y=20)
 
     # Caixa de pesquisa
@@ -42,7 +42,7 @@ def Cadastro_Usuario(instance):
         for item in tree.get_children():
             tree.delete(item)
         for usuario in dados_usuarios:
-            tree.insert("", "end", values=(usuario['nome'], usuario['email'], usuario['login'], usuario['senha'], "Administrador" if usuario['admin'] == 1 else "Normal"))
+            tree.insert("", "end", values=(usuario['nome'], usuario['email'], usuario['login'], usuario['senha'], "Administrador" if usuario['adm'] == 1 else "Normal"))
 
     def filtrar_por_nome():
         nome_busca = search_entry.get().lower()
@@ -125,13 +125,11 @@ def Cadastro_Usuario(instance):
                         "email": email,
                         "login": login,
                         "senha": senha,
-                        "admin": admin
+                        "adm": admin
                     }
-                    
-                    # Atualizar diretamente os dados no banco de dados
-                    query = """UPDATE usuarios SET nome = %s, email = %s, login = %s, senha = %s, admin = %s WHERE nome = %s"""
-                    params = (dados_dict['nome'], dados_dict['email'], dados_dict['login'], dados_dict['senha'], dados_dict['admin'], item_values[0])
-                    usuario.execute_query(query, params)  # Supondo que execute_query é um método da classe Usuario que executa uma query SQL.
+                
+                    # Atualizar dire os dados no banco de dados
+                    usuario.update(dados_dict, f'login = {login}')
 
                     messagebox.showinfo("Sucesso", "Usuário editado com sucesso!")
                     editar_window.destroy()  # Fechar a janela após salvar
@@ -211,7 +209,7 @@ def Cadastro_Usuario(instance):
                     "email": email,
                     "login": login,
                     "senha": senha,
-                    "admin": admin
+                    "adm": admin
                 }
                 usuario.registra_usuarios(dados_dict)
                 messagebox.showinfo("Sucesso", "Usuário cadastrado com sucesso!")

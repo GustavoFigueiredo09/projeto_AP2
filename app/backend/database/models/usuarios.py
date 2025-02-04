@@ -12,10 +12,10 @@ class Usuario(BaseCRUD):
         return super().read()
     
     def busca_por_admins(self, info='*'):
-        return super().read(filtro='admin = 1')
+        return super().read(filtro='adm = 1')
     
     def busca_por_users(self, info='*'):
-        return super().read(info=info, filtro='admin = 0')
+        return super().read(info=info, filtro='adm = 0')
     
     def busca_por_nome(self, nome, info='*'):
         return super().read(filtro=f'nome LIKE "%{nome}%"')

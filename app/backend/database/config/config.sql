@@ -1,3 +1,5 @@
+DROP TABLE usuarios;
+
 CREATE TABLE IF NOT EXISTS usuarios (
                         id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
                         id_arquivos INTEGER,
@@ -5,7 +7,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
                         email TEXT NOT NULL,
                         login TEXT NOT NULL,
                         senha INTERGER NOT NULL,
-                        admin INTEGER NOT NULL);
+                        adm INTEGER NOT NULL);
 
 CREATE TABLE IF NOT EXISTS terceiros (
                         id_terceiros INTEGER PRIMARY KEY AUTOINCREMENT,
