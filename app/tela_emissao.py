@@ -88,8 +88,15 @@ def Tela_Emissao(instance):
                           foreground="white" )
     entry_observacoes.place(x=310,y=440)
 
+    #Botões/ Emitir / Limpar
+    botao_emitir = Button(instance.frame_1, text="Emitir",font=("Arial", 12, 'bold'), background=instance.color_4,
+                          foreground="black", width=20)
+    botao_emitir.place(x=450,y=540)
 
-
+    #Botão Limpar
+    botao_limpar = Button(instance.frame_1, text="Limpar campos",font=("Arial", 12, 'bold'), background=instance.color_4,
+                          foreground="black", width=20)
+    botao_limpar.place(x=700,y=540)
 
 
 
