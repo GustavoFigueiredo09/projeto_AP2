@@ -12,10 +12,10 @@ class Usuario(BaseCRUD):
         return super().read()
     
     def busca_por_admins(self, info='*'):
-        return super().read(filtro='adm = 1')
+        return super().read(filtro='admin = 1')
     
     def busca_por_users(self, info='*'):
-        return super().read(info=info, filtro='adm = 0')
+        return super().read(info=info, filtro='admin = 0')
     
     def busca_por_nome(self, nome, info='*'):
         return super().read(filtro=f'nome LIKE "%{nome}%"')
@@ -32,11 +32,16 @@ class Usuario(BaseCRUD):
     def registra_multiplos_usuarios(self, usuarios):
         for usuario in usuarios:
             super().create(usuario)
-            
+          
     # OBS.: TODOS os metodos retornam uma lista com dicionarios ex: [{maria, 12, 55, admin}, {carlos, 23, 44, user}, ...]
 
 if __name__ == '__main__':
     # Exemplo de Uso, basta colocar o login e senha
     usuario = Usuario()
-    dados_dict = usuario.buscar_login_e_senha('maia.carla53', 26820)
-    print(dados_dict)
+    usuario.create({
+    "nome": "Joãof",
+    "email": "joao.va@email.com",
+    "login": "joao.si34",
+    "senha": 8625,
+    "adm": 1},
+)

@@ -1,11 +1,11 @@
 DROP TABLE usuarios;
+DROP TABLE arquivos;
 
 CREATE TABLE IF NOT EXISTS usuarios (
                         id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
-                        id_arquivos INTEGER,
                         nome TEXT NOT NULL,
                         email TEXT NOT NULL,
-                        login TEXT NOT NULL,
+                        login TEXT NOT NULL UNIQUE,
                         senha INTERGER NOT NULL,
                         adm INTEGER NOT NULL);
 
@@ -29,10 +29,10 @@ CREATE TABLE IF NOT EXISTS lancamentos (
                         descricao TEXT);
 
 CREATE TABLE IF NOT EXISTS arquivos (
-                        id_arquivo INTEGER NOT NULL,
+                        id_arquivo TEXT NOT NULL,
                         nome_arquivo TEXT NOT NULL,
                         arquivo BLOB NOT NULL,
-                        FOREIGN KEY (id_arquivo) REFERENCES usuarios(id_arquivos));
+                        FOREIGN KEY (id_arquivo) REFERENCES usuarios(login));
 
 
 -- DELETE FROM arquivos;
