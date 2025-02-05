@@ -1,5 +1,5 @@
 from tkinter import *
-
+import tkinter as tk
 def Tela_Emissao(instance): 
     instance.ClearScreen()
 
@@ -8,12 +8,23 @@ def Tela_Emissao(instance):
                          font=(instance.font_2, 15, 'bold'), bg=instance.color_2, fg=instance.color_3)
     select_label.place(x=40, y=20)
 
+    def limpar():
+        entry_CFOP.delete(0, tk.END)
+        entry_produto.delete(0, tk.END)
+        entry_valor_produto.delete(0, tk.END)
+        entry_tributacao.delete(0, tk.END)
+        entry_valor_icm.delete(0, tk.END)
+        entry_valor_ipi.delete(0, tk.END)
+        entry_valor_pis.delete(0, tk.END)
+        entry_descontos.delete(0, tk.END)
+        entry_observacoes.delete(0, tk.END)
+
     #Label e Entrada CFOP
     label_CFOP = Label(instance.frame_1, text="CFOP:",bg=instance.color_2,fg=instance.color_3,
                        font=("Arial", 12))
     label_CFOP.place(x=250,y=120)
     entry_CFOP = Entry(instance.frame_1,font=("Arial",12),width=20,
-                       foreground="white")
+                       foreground="black")
     entry_CFOP.place(x=310,y=120)
     
     #Label e Entrada Produto/Serviço
@@ -21,7 +32,7 @@ def Tela_Emissao(instance):
                           font=("Arial", 12))
     label_produto.place(x=180,y=160)
     entry_produto = Entry(instance.frame_1, font=("Arial", 12), width=20,
-                          foreground="white" )
+                          foreground="black" )
     entry_produto.place(x=310,y=160)
 
 
@@ -30,7 +41,7 @@ def Tela_Emissao(instance):
                                 font=("Arial", 12))
     label_valor_produto.place(x= 144,y=200)
     entry_valor_produto = Entry(instance.frame_1, font=("Arial", 12), width=20,
-                          foreground="white" )
+                          foreground="black" )
     entry_valor_produto.place(x=310,y=200)
 
 
@@ -39,7 +50,7 @@ def Tela_Emissao(instance):
                              font=("Arial", 12))
     label_tributacao.place(x=175,y=240)
     entry_tributacao = Entry(instance.frame_1, font=("Arial", 12), width=20,
-                          foreground="white" )
+                          foreground="black" )
     entry_tributacao.place(x=310,y=240)
 
 
@@ -48,7 +59,7 @@ def Tela_Emissao(instance):
                             font=("Arial", 12))
     label_valor_icm.place(x=210,y=280)
     entry_valor_icm = Entry(instance.frame_1, font=("Arial", 12), width=20,
-                          foreground="white" )
+                          foreground="black" )
     entry_valor_icm.place(x=310,y=280)
 
 
@@ -57,7 +68,7 @@ def Tela_Emissao(instance):
                             font=("Arial", 12))
     label_valor_ipi.place(x=230,y=320)
     entry_valor_ipi = Entry(instance.frame_1, font=("Arial", 12), width=20,
-                          foreground="white" )
+                          foreground="black" )
     entry_valor_ipi.place(x=310,y=320)
 
 
@@ -67,7 +78,7 @@ def Tela_Emissao(instance):
                             font=("Arial", 12))
     label_valor_pis.place(x=222, y=360)
     entry_valor_pis = Entry(instance.frame_1, font=("Arial", 12), width=20,
-                          foreground="white" )
+                          foreground="black" )
     entry_valor_pis.place(x=310,y=360)
 
 
@@ -76,7 +87,7 @@ def Tela_Emissao(instance):
                             font=("Arial", 12))
     label_descontos.place(x=215, y=400)
     entry_descontos = Entry(instance.frame_1, font=("Arial", 12), width=20,
-                          foreground="white" )
+                          foreground="black" )
     entry_descontos.place(x=310,y=400)
 
 
@@ -85,7 +96,7 @@ def Tela_Emissao(instance):
                               font=("Arial", 12))
     label_observacoes.place(x=196,y=440)
     entry_observacoes = Entry(instance.frame_1, font=("Arial", 12), width=40,
-                          foreground="white" )
+                          foreground="black" )
     entry_observacoes.place(x=310,y=440)
 
     #Botões/ Emitir / Limpar
@@ -95,7 +106,7 @@ def Tela_Emissao(instance):
 
     #Botão Limpar
     botao_limpar = Button(instance.frame_1, text="Limpar campos",font=("Arial", 12, 'bold'), background=instance.color_4,
-                          foreground="black", width=20)
+                          foreground="black", width=20,command=limpar)
     botao_limpar.place(x=700,y=540)
 
 
