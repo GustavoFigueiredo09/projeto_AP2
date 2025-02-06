@@ -9,8 +9,8 @@ def Cadastro_Usuario(instance):
 
     # Texto de boas-vindas
     select_label = Label(instance.frame_1, text="Cadastros de usuários",
-                         font=(instance.font_4, 15, 'bold'), bg=instance.color_2, fg=instance.color_3)
-    select_label.place(x=40, y=20)
+                         font=(instance.font_4, 20, 'bold'), bg=instance.color_2, fg=instance.color_3)
+    select_label.place(x=440, y=10)
 
     # Caixa de pesquisa
     search_label = Label(instance.frame_1, text="Pesquisar:",
