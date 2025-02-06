@@ -52,7 +52,7 @@ def Cadastro_Usuario(instance):
             carregar_dados_tabela()
 
     # Botão de buscar
-    search_button = Button(instance.frame_1, text="Buscar", font=(instance.font_4, 12), command=filtrar_por_nome)
+    search_button = Button(instance.frame_1, text="Buscar", font=(instance.font_4, 12), command=filtrar_por_nome, bg="#67a516", fg="white")
     search_button.place(x=770, y=55)
 
     # Carregar dados ao iniciar
@@ -79,36 +79,36 @@ def Cadastro_Usuario(instance):
             
             # Labels e campos de entrada para as informações do usuário
             nome_label = Label(editar_window, text="Nome", font=(instance.font_4, 12))
-            nome_label.pack(pady=10)
+            nome_label.pack(pady=10, padx=20, anchor="w")
             nome_entry = Entry(editar_window, width=30, font=(instance.font_4, 14))
             nome_entry.insert(0, item_values[0])  # Preencher com o valor atual
-            nome_entry.pack(pady=5)
+            nome_entry.pack(pady=5, padx=20, anchor="w")
             
             email_label = Label(editar_window, text="Email", font=(instance.font_4, 12))
-            email_label.pack(pady=10)
+            email_label.pack(pady=10, padx=20, anchor="w")
             email_entry = Entry(editar_window, width=30, font=(instance.font_4, 14))
             email_entry.insert(0, item_values[1])  # Preencher com o valor atual
-            email_entry.pack(pady=5)
+            email_entry.pack(pady=5, padx=20, anchor="w")
             
             login_label = Label(editar_window, text="Login", font=(instance.font_4, 12))
-            login_label.pack(pady=10)
+            login_label.pack(pady=10, padx=20, anchor="w")
             login_entry = Entry(editar_window, width=30, font=(instance.font_4, 14))
             login_entry.insert(0, item_values[2])  # Preencher com o valor atual
-            login_entry.pack(pady=5)
+            login_entry.pack(pady=5, padx=20, anchor="w")
             
             senha_label = Label(editar_window, text="Senha", font=(instance.font_4, 12))
-            senha_label.pack(pady=10)
+            senha_label.pack(pady=10, padx=20, anchor="w")
             senha_entry = Entry(editar_window, width=30, font=(instance.font_4, 14), show="*")
             senha_entry.insert(0, item_values[3])  # Preencher com o valor atual
-            senha_entry.pack(pady=5)
+            senha_entry.pack(pady=5, padx=20, anchor="w")
             
             admin_label = Label(editar_window, text="Categoria", font=(instance.font_4, 12))
-            admin_label.pack(pady=10)
+            admin_label.pack(pady=10, padx=20, anchor="w")
             admin_var = IntVar()
             admin_check = Checkbutton(editar_window, text="Administrador", variable=admin_var, font=(instance.font_4, 12))
             if item_values[4] == "Administrador":
                 admin_var.set(1)  # Se for "Administrador", marcar o checkbox
-            admin_check.pack(pady=5)
+            admin_check.pack(pady=5, padx=20, anchor="w")
 
             # Função para salvar as edições
             def salvar_edicao():
@@ -129,7 +129,7 @@ def Cadastro_Usuario(instance):
                     }
                 
                     # Atualizar dire os dados no banco de dados
-                    usuario.update(dados_dict, f'login = {login}')
+                    # usuario.update(dados_dict, f'login = {}') # Coloca akiiiiiiiiiiiiiiiiiiiiiiiiiiii
 
                     messagebox.showinfo("Sucesso", "Usuário editado com sucesso!")
                     editar_window.destroy()  # Fechar a janela após salvar
@@ -138,7 +138,7 @@ def Cadastro_Usuario(instance):
                     messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
 
             # Botão para salvar as edições
-            salvar_button = Button(editar_window, text="Salvar", font=(instance.font_4, 12), command=salvar_edicao)
+            salvar_button = Button(editar_window, text="Salvar", font=(instance.font_4, 12), command=salvar_edicao, bg="#67a516", fg="white")
             salvar_button.pack(pady=20)
 
     # Função para remover o usuário
@@ -168,31 +168,31 @@ def Cadastro_Usuario(instance):
 
         # Labels e campos de entrada para as informações do usuário
         nome_label = Label(cadastro_window, text="Nome", font=(instance.font_4, 12))
-        nome_label.pack(pady=10)
-        nome_entry = Entry(cadastro_window, width=30, font=(instance.font_4, 14))
-        nome_entry.pack(pady=5)
+        nome_label.pack(pady=10,padx=20, anchor="w")
+        nome_entry = Entry(cadastro_window, width=30, font=(instance.font_4, 12))
+        nome_entry.pack(pady=5, padx=20, anchor="w")
 
         email_label = Label(cadastro_window, text="Email", font=(instance.font_4, 12))
-        email_label.pack(pady=10)
+        email_label.pack(pady=10, padx=20, anchor="w")
         email_entry = Entry(cadastro_window, width=30, font=(instance.font_4, 14))
-        email_entry.pack(pady=5)
+        email_entry.pack(pady=5, padx=20, anchor="w")
 
         login_label = Label(cadastro_window, text="Login", font=(instance.font_4, 12))
-        login_label.pack(pady=10)
+        login_label.pack(pady=10, padx=20, anchor="w")
         login_entry = Entry(cadastro_window, width=30, font=(instance.font_4, 14))
-        login_entry.pack(pady=5)
+        login_entry.pack(pady=5, padx=20, anchor="w")
 
         senha_label = Label(cadastro_window, text="Senha", font=(instance.font_4, 12))
-        senha_label.pack(pady=10)
+        senha_label.pack(pady=10, padx=20, anchor="w")
         senha_entry = Entry(cadastro_window, width=30, font=(instance.font_4, 14), show="*")
-        senha_entry.pack(pady=5)
+        senha_entry.pack(pady=5, padx=20, anchor="w")
 
         # Campo para definir se é administrador ou não
         admin_label = Label(cadastro_window, text="Categoria", font=(instance.font_4, 12))
-        admin_label.pack(pady=10)
+        admin_label.pack(pady=10, padx=20, anchor="w")
         admin_var = IntVar()
         admin_check = Checkbutton(cadastro_window, text="Administrador", variable=admin_var, font=(instance.font_4, 12))
-        admin_check.pack(pady=5)
+        admin_check.pack(pady=5, padx=20, anchor="w")
 
         # Função para salvar o novo usuário
         def salvar_usuario():
@@ -219,15 +219,15 @@ def Cadastro_Usuario(instance):
                 messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
 
         # Botão para salvar o novo usuário
-        salvar_button = Button(cadastro_window, text="Salvar", font=(instance.font_4, 12), command=salvar_usuario)
+        salvar_button = Button(cadastro_window, text="Salvar", font=(instance.font_4, 12), command=salvar_usuario, bg="#67a516", fg="white")
         salvar_button.pack(pady=20)
 
     # Botões "Novo", "Editar", "Remover"
-    novo_button = Button(instance.frame_1, text=" + Novo", font=(instance.font_4, 12), command=novo_usuario)
+    novo_button = Button(instance.frame_1, text=" + Novo", font=(instance.font_4, 12), command=novo_usuario, bg="#67a516", fg="white")
     novo_button.place(x=475, y=550)
 
-    editar_button = Button(instance.frame_1, text="Editar", font=(instance.font_4, 12), command=editar_usuario)
+    editar_button = Button(instance.frame_1, text="Editar", font=(instance.font_4, 12), command=editar_usuario, bg="#67a516", fg="white")
     editar_button.place(x=580, y=550)
 
-    remover_button = Button(instance.frame_1, text="Remover", font=(instance.font_4, 12), command=remover_usuario)
+    remover_button = Button(instance.frame_1, text="Remover", font=(instance.font_4, 12), command=remover_usuario, bg="#67a516", fg="white")
     remover_button.place(x=675, y=550)
