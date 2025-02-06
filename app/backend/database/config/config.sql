@@ -1,5 +1,6 @@
-DROP TABLE usuarios;
-DROP TABLE arquivos;
+-- DROP TABLE usuarios;
+-- DROP TABLE arquivos;
+-- DROP TABLE terceiros;
 
 CREATE TABLE IF NOT EXISTS usuarios (
                         id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -13,7 +14,7 @@ CREATE TABLE IF NOT EXISTS terceiros (
                         id_terceiros INTEGER PRIMARY KEY AUTOINCREMENT,
                         razao TEXT NOT NULL,
                         nome_fantasia TEXT NOT NULL,
-                        cpf_cpnj TEXT NOT NULL,
+                        cpf_cnpj TEXT NOT NULL,
                         email TEXT NOT NULL,
                         telefone INTEGER,
                         categoria TEXT NOT NULL);
@@ -29,11 +30,7 @@ CREATE TABLE IF NOT EXISTS lancamentos (
                         descricao TEXT);
 
 CREATE TABLE IF NOT EXISTS arquivos (
-                        id_arquivo TEXT NOT NULL,
+                        id_arquivo INTEGER NOT NULL,
                         nome_arquivo TEXT NOT NULL,
                         arquivo BLOB NOT NULL,
-                        FOREIGN KEY (id_arquivo) REFERENCES usuarios(login));
-
-
--- DELETE FROM arquivos;
--- DELETE FROM sqlite_sequence WHERE name = 'arquivos';
+                        FOREIGN KEY (id_arquivo) REFERENCES usuarios(id_usuario));

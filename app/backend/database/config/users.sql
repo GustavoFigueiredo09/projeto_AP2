@@ -15,3 +15,4 @@ INSERT INTO usuarios (nome, email, login, senha, adm) VALUES ('Larissa Martins',
 
 INSERT INTO usuarios (nome, email, login, senha, adm) VALUES ('Administrador', 'adm@cactus.fiscal.br', 'admin', 1234, 1);
 INSERT INTO usuarios (nome, email, login, senha, adm) VALUES ('Usuário', 'usuario@cactus.fiscal.br', 'user', 1234, 0);
+INSERT INTO usuarios (nome, email, login, senha, adm) VALUES ('Tecla Fernandes', 'teclafernandes@gmail.com.br', 'tecla', 1234, 1);
