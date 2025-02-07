@@ -21,15 +21,12 @@ def Cadastro_Terceiros(instance):
 
     # Tabela de terceiros
     tree = ttk.Treeview(instance.frame_1, columns=("Razão social", "Nome fantasia", "Email", "Contato", "CPF/CNPJ"), show="headings")
-
-    # Definição dos cabeçalhos
     for col in ("Razão social", "Nome fantasia", "Email", "Contato", "CPF/CNPJ"):
         tree.heading(col, text=col)
         tree.column(col, width=200)
     
     tree.place(x=80, y=100, width=1050, height=400)
 
-    # Carregar dados do banco
     def carregar_dados_tabela(filtro=None):
         terceiro = terceiros()
         dados_terceiros = terceiro.read() if filtro is None else terceiro.read(f"razao LIKE '%{filtro}%' OR nome_fantasia LIKE '%{filtro}%'")
@@ -47,10 +44,9 @@ def Cadastro_Terceiros(instance):
 
     carregar_dados_tabela()
 
-    # Função para adicionar um novo terceiro
-    def novo_terceiro():
+    def abrir_janela_terceiro(dados=None):
         def salvar():
-            dados = {
+            novo_dados = {
                 "razao": razao_entry.get(),
                 "nome_fantasia": nome_entry.get(),
                 "email": email_entry.get(),
@@ -58,42 +54,64 @@ def Cadastro_Terceiros(instance):
                 "cpf_cnpj": cpf_cnpj_entry.get()
             }
             
-            if all(dados.values()):
+            if all(novo_dados.values()):
                 terceiro = terceiros()
-                terceiro.create(dados)
-                messagebox.showinfo("Sucesso", "Terceiro cadastrado com sucesso!")
+                if dados:
+                    terceiro.update(novo_dados, f"razao = '{dados['razao']}'")
+                else:
+                    terceiro.create(novo_dados)
+                messagebox.showinfo("Sucesso", "Dados salvos com sucesso!")
                 cadastro_window.destroy()
                 carregar_dados_tabela()
             else:
                 messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
         
         cadastro_window = Toplevel(instance.frame_1)
-        cadastro_window.title("Novo Terceiro")
+        cadastro_window.title("Editar Terceiro" if dados else "Novo Terceiro")
         cadastro_window.geometry("400x400")
         
         Label(cadastro_window, text="Razão Social").pack()
         razao_entry = Entry(cadastro_window, width=30)
         razao_entry.pack()
+        razao_entry.insert(0, dados["razao"] if dados else "")
         
         Label(cadastro_window, text="Nome Fantasia").pack()
         nome_entry = Entry(cadastro_window, width=30)
         nome_entry.pack()
+        nome_entry.insert(0, dados["nome_fantasia"] if dados else "")
         
         Label(cadastro_window, text="Email").pack()
         email_entry = Entry(cadastro_window, width=30)
         email_entry.pack()
+        email_entry.insert(0, dados["email"] if dados else "")
         
         Label(cadastro_window, text="Contato").pack()
         contato_entry = Entry(cadastro_window, width=30)
         contato_entry.pack()
+        contato_entry.insert(0, dados["telefone"] if dados else "")
         
         Label(cadastro_window, text="CPF/CNPJ").pack()
         cpf_cnpj_entry = Entry(cadastro_window, width=30)
         cpf_cnpj_entry.pack()
+        cpf_cnpj_entry.insert(0, dados["cpf_cnpj"] if dados else "")
         
         Button(cadastro_window, text="Salvar", command=salvar, bg="#67a516", fg="white").pack()
 
-    # Função para remover um terceiro
+    def editar_terceiro():
+        selected_item = tree.selection()
+        if selected_item:
+            item_values = tree.item(selected_item, "values")
+            dados = {
+                "razao": item_values[0],
+                "nome_fantasia": item_values[1],
+                "email": item_values[2],
+                "telefone": item_values[3],
+                "cpf_cnpj": item_values[4]
+            }
+            abrir_janela_terceiro(dados)
+        else:
+            messagebox.showerror("Erro", "Selecione um terceiro para editar.")
+    
     def remover_terceiro():
         selected_item = tree.selection()
         if selected_item:
@@ -105,9 +123,11 @@ def Cadastro_Terceiros(instance):
         else:
             messagebox.showerror("Erro", "Selecione um terceiro para remover.")
     
-    # Botões
-    novo_button = Button(instance.frame_1, text="+ Novo", font=(instance.font_4, 12), command=novo_terceiro, bg="#67a516", fg="white")
-    novo_button.place(x=475, y=550)
+    novo_button = Button(instance.frame_1, text="+ Novo", font=(instance.font_4, 12), command=lambda: abrir_janela_terceiro(), bg="#67a516", fg="white")
+    novo_button.place(x=375, y=550)
+
+    editar_button = Button(instance.frame_1, text="Editar", font=(instance.font_4, 12), command=editar_terceiro, bg="#67a516", fg="white")
+    editar_button.place(x=575, y=550)
 
     remover_button = Button(instance.frame_1, text="Remover", font=(instance.font_4, 12), command=remover_terceiro, bg="#67a516", fg="white")
-    remover_button.place(x=675, y=550)
+    remover_button.place(x=775, y=550)
