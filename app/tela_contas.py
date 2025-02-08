@@ -12,15 +12,18 @@ def Tela_Contas(instance):
     select_label.place(x=40, y=20)
         
     # Botões de saldo, gastos e impostos
-    Label(instance.frame_1, text="SALDO", font=("Arial", 12), bg="green", fg="white", width=15).place(x=400, y=130, anchor="center")
-    tk.Entry(instance.frame_1, width=15).place(x=400, y=165, anchor="center")
+    Label(instance.frame_1, text="SALDO", font=("Arial", 12, "bold"), bg="green", fg="white", width=15).place(x=400, y=130, anchor="center")
+    lbl_saldo = Label(instance.frame_1, width=15, font=("Arial", 12), bg="white", fg="black", relief="solid")
+    lbl_saldo.place(x=400, y=165, anchor="center")
     
     Label(instance.frame_1, text="GASTOS", font=("Arial", 12), bg="green", fg="white", width=15).place(x=600, y=130, anchor="center")
-    tk.Entry(instance.frame_1, width=15).place(x=600, y=165, anchor="center")
-
+    lbl_gastos = Label(instance.frame_1, width=15, font=("Arial", 12), bg="white", fg="black", relief="solid")
+    lbl_gastos.place(x=600, y=165, anchor="center")
+    
     Label(instance.frame_1, text="IMPOSTOS", font=("Arial", 12), bg="green", fg="white", width=15).place(x=800, y=130, anchor="center")
-    tk.Entry(instance.frame_1, width=15).place(x=800, y=165, anchor="center")
-
+    lbl_impostos = Label(instance.frame_1, width=15, font=("Arial", 12), bg="white", fg="black", relief="solid")
+    lbl_impostos.place(x=800, y=165, anchor="center")
+    
     # Estilo de aparência das colunas
     estilo = ttk.Style()
     estilo.theme_use("default")  # Define o tema padrão
@@ -37,17 +40,19 @@ def Tela_Contas(instance):
              selectmode='browse',
              columns=('coluna1', 'coluna2', 'coluna3'),
              show='headings',
-             style="Custom.Treeview"
+             style="Custom.Treeview",
+             height=20
+             
          )
             
     # Configurando as colunas
-    tree.column('coluna1', width=150, minwidth=50, stretch=NO, anchor='center')
+    tree.column('coluna1', width=300, minwidth=150, stretch=NO, anchor='center')
     tree.heading('#1', text='Conta')
             
-    tree.column('coluna2', width=150, minwidth=50, stretch=NO, anchor='center')
+    tree.column('coluna2', width=300, minwidth=150, stretch=NO, anchor='center')
     tree.heading('#2', text='Banco')
             
-    tree.column('coluna3', width=150, minwidth=50, stretch=NO, anchor='center')
+    tree.column('coluna3', width=200, minwidth=100, stretch=NO, anchor='center')
     tree.heading('#3', text='Saldo')
 
     # Função para formatar o valor do saldo com o prefixo "R$"
@@ -65,4 +70,4 @@ def Tela_Contas(instance):
     tree.insert('', END, values=elementos)
 
     # Usando o método place() para centralizar o Treeview
-    tree.place(relx=0.5, rely=0.5, anchor='center')
+    tree.place(relx=0.5, rely=0.6, anchor='center', width=800, height=400)
