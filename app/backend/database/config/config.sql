@@ -34,3 +34,16 @@ CREATE TABLE IF NOT EXISTS arquivos (
                         nome_arquivo TEXT NOT NULL,
                         arquivo BLOB NOT NULL,
                         FOREIGN KEY (id_arquivo) REFERENCES usuarios(id_usuario));
+
+CREATE TABLE IF NOT EXISTS emissoes (
+                        id_emissao INTEGER PRIMARY KEY AUTOINCREMENT,
+                        cfop INTEGER NOT NULL,
+                        produto_servico TEXT NOT NULL,
+                        valor_produto REAL NOT NULL,
+                        tributacao_icms TEXT NOT NULL,
+                        valor_ipi REAL NOT NULL,
+                        valor_pis REAL NOT NULL,
+                        descontos REAL NOT NULL,
+                        observacoes TEXT);
+
+

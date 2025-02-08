@@ -3,7 +3,7 @@ if __name__ == '__main__':
 else:
     from .mainCRUD import BaseCRUD
 
-class terceiros(BaseCRUD):
+class Terceiros(BaseCRUD):
 
     def __init__(self):
         super().__init__(tabela='terceiros')

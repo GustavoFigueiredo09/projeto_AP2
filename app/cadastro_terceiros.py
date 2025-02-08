@@ -1,7 +1,7 @@
 import re
 from tkinter import *
 from tkinter import ttk, messagebox
-from backend.database.models.terceiros import terceiros
+from backend.database.models.terceiros import Terceiros
 
 def Cadastro_Terceiros(instance): 
     instance.ClearScreen()
@@ -28,7 +28,7 @@ def Cadastro_Terceiros(instance):
     tree.place(x=80, y=100, width=1050, height=400)
 
     def carregar_dados_tabela(filtro=None):
-        terceiro = terceiros()
+        terceiro = Terceiros()
         dados_terceiros = terceiro.read() if filtro is None else terceiro.read(f"razao LIKE '%{filtro}%' OR nome_fantasia LIKE '%{filtro}%'")
         
         tree.delete(*tree.get_children())
@@ -55,7 +55,7 @@ def Cadastro_Terceiros(instance):
             }
             
             if all(novo_dados.values()):
-                terceiro = terceiros()
+                terceiro = Terceiros()
                 if dados:
                     terceiro.update(novo_dados, f"razao = '{dados['razao']}'")
                 else:
@@ -116,7 +116,7 @@ def Cadastro_Terceiros(instance):
         selected_item = tree.selection()
         if selected_item:
             item_values = tree.item(selected_item, "values")
-            terceiro = terceiros()
+            terceiro = Terceiros()
             terceiro.delete(f"razao = '{item_values[0]}'")
             messagebox.showinfo("Sucesso", "Terceiro removido com sucesso!")
             carregar_dados_tabela()
