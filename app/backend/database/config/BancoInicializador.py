@@ -68,10 +68,24 @@ class Config:
         
         print('Tabela Terceiros Iniciada')
 
+    def setup_emissoes(self):
+
+        sql_file_path = 'app/backend/database/config/emissao.sql'
+        with open(sql_file_path, 'r', encoding='utf-8') as file:
+            sql_script = file.read()
+
+        with self._conectar() as conn:
+            cursor = conn.cursor()
+            cursor.executescript(sql_script)
+        
+        
+        print('Tabela Emissoes Iniciada')
+
 # Só para testes, chamar função na inicialização
 if __name__ == '__main__':
     inicio = Config('backend\database\database.db')
     inicio.setup()
-    inicio.setup_lancamentos()
-    inicio.setup_usuarios()
-    inicio.setup_terceiros()
+    # inicio.setup_lancamentos()
+    # inicio.setup_usuarios()
+    # inicio.setup_terceiros()
+    inicio.setup_emissoes()

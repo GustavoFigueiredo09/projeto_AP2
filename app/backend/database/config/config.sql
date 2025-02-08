@@ -1,6 +1,7 @@
 -- DROP TABLE usuarios;
 -- DROP TABLE arquivos;
 -- DROP TABLE terceiros;
+DROP TABLE emissoes;
 
 CREATE TABLE IF NOT EXISTS usuarios (
                         id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,6 +42,7 @@ CREATE TABLE IF NOT EXISTS emissoes (
                         produto_servico TEXT NOT NULL,
                         valor_produto REAL NOT NULL,
                         tributacao_icms TEXT NOT NULL,
+                        valor_icms REAL NOT NULL,
                         valor_ipi REAL NOT NULL,
                         valor_pis REAL NOT NULL,
                         descontos REAL NOT NULL,
