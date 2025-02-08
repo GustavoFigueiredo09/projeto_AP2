@@ -2,7 +2,7 @@
 -- DROP TABLE arquivos;
 -- DROP TABLE terceiros;
 -- DROP TABLE emissoes;
-DROP TABLE lancamentos;
+-- DROP TABLE lancamentos;
 
 CREATE TABLE IF NOT EXISTS usuarios (
                         id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -50,5 +50,11 @@ CREATE TABLE IF NOT EXISTS emissoes (
                         valor_pis REAL NOT NULL,
                         descontos REAL NOT NULL,
                         observacoes TEXT);
+
+CREATE TABLE IF NOT EXISTS bancos (
+                        id_banco INTEGER PRIMARY KEY AUTOINCREMENT,
+                        conta INTEGER NOT NULL,
+                        banco TEXT NOT NULL);
+
 
 
