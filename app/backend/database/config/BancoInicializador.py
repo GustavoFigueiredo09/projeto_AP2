@@ -85,7 +85,7 @@ class Config:
 if __name__ == '__main__':
     inicio = Config('backend\database\database.db')
     inicio.setup()
-    # inicio.setup_lancamentos()
+    inicio.setup_lancamentos()
     # inicio.setup_usuarios()
     # inicio.setup_terceiros()
-    inicio.setup_emissoes()
+    # inicio.setup_emissoes() 

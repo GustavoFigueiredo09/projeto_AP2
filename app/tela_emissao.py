@@ -1,5 +1,8 @@
 from tkinter import *
 import tkinter as tk
+from backend.database.models.emissoes import Emissoes
+from tkinter import messagebox
+
 def Tela_Emissao(instance): 
     instance.ClearScreen()
 

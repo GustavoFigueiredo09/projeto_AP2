@@ -1,8 +1,9 @@
 from tkinter import *
+from tkinter import ttk
 import tkinter as tk
 import customtkinter as ctk
 from tkinter import messagebox
-
+from backend.database.models.lancamentos import Lancamento
 def Tela_Lancamentos(root):
     # Limpa tela anterior
     for widget in root.frame_1.winfo_children():
@@ -16,17 +17,18 @@ def Tela_Lancamentos(root):
         entry_codigo.insert(0, "000122457554412")
 
     def salvar():
-        dados = {"código:": entry_codigo.get(),
-                 "Data:": data_entry.get(),
-                 "Valor total da nota:": nota_entry.get(),
-                 "Valor dos produtos:": produto_entry.get(),
-                 "Valor dos impostos:": imp_entry.get(),
-                 "Operação:": oper_entry.get(),
-                 "Emitente:": emt_entry.get(),
-                 "Tipo de operação:": tipo_entry.get(),
-                 "Descrição:": desc_entry.get()
+        dados = {"data": data_entry.get(),
+                 "valor_total": nota_entry.get(),
+                 "valor_pago": produto_entry.get(),
+                 "operacao": oper_entry.get(),
+                 "emitente": emt_entry.get(),
+                 "tipo_operacao": cb_tipo.get(),
+                 "descricao": desc_entry.get()
         }
         if all(dados.values()):  
+            lancamento = Lancamento()
+            if dados:
+                lancamento.create(dados)
             messagebox.showinfo("Sucesso", "Dados salvos com sucesso!")
             print("Dados salvos:", dados)
         else:
@@ -41,10 +43,11 @@ def Tela_Lancamentos(root):
         imp_entry.delete(0,tk.END)
         oper_entry.delete(0,tk.END)
         emt_entry.delete(0,tk.END)
-        tipo_entry.delete(0,tk.END)
+        cb_tipo.delete(0, tk.END)
         desc_entry.delete(0,tk.END)
         
-    # def Excluir_Lançamento
+    #defexcluir_lancamento():
+
     
     # Botão para escanear
     btn_scanear = tk.Button(root.frame_1, text="Scanear", bg="#66CC33", fg="white", font=("Arial bold", 12), command=scanear)
@@ -94,9 +97,10 @@ def Tela_Lancamentos(root):
 
     lbl_tipo = tk.Label(root.frame_1, text="Tipo de operação:", bg="#FDFDE3", font=("Helvetica",12,"bold"))
     lbl_tipo.place(x=664,y=160)
-    tipo_entry = ctk.CTkEntry(root.frame_1, font=("Arial",12),width=200, 
-                              fg_color="white", text_color="black")
-    tipo_entry.place(x=810,y=160)
+
+    opcoes = ["Entrada", "Saída"]
+    cb_tipo = ttk.Combobox(root.frame_1, values=opcoes, width=30)
+    cb_tipo.place(x=810,y=160)
 
     lbl_descricao = tk.Label(root.frame_1, text="Descrição:", bg="#FDFDE3", font=("Helvetica",12,"bold"))
     lbl_descricao.place(x=720,y=210)
