@@ -1,7 +1,8 @@
 -- DROP TABLE usuarios;
 -- DROP TABLE arquivos;
 -- DROP TABLE terceiros;
-DROP TABLE emissoes;
+-- DROP TABLE emissoes;
+DROP TABLE lancamentos;
 
 CREATE TABLE IF NOT EXISTS usuarios (
                         id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,11 +23,13 @@ CREATE TABLE IF NOT EXISTS terceiros (
 
 CREATE TABLE IF NOT EXISTS lancamentos (
                         id_lancamentos INTEGER PRIMARY KEY AUTOINCREMENT,
+                        codigo INTEGER NOT NULL UNIQUE,
                         data TEXT NOT NULL,
                         valor_total REAL NOT NULL,
                         valor_pago REAL NOT NULL,
+                        impostos REAL NOT NULL,
                         operacao TEXT NOT NULL,
-                        emitente INTEGER,
+                        emitente TEXT NOT NULL,
                         tipo_operacao TEXT NOT NULL,
                         descricao TEXT);
 
