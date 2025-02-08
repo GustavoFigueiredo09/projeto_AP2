@@ -17,9 +17,11 @@ def Tela_Lancamentos(root):
         entry_codigo.insert(0, "000122457554412")
 
     def salvar():
-        dados = {"data": data_entry.get(),
+        dados = {"codigo":entry_codigo.get(),
+                 "data": data_entry.get(),
                  "valor_total": nota_entry.get(),
                  "valor_pago": produto_entry.get(),
+                 "impostos": imp_entry.get(),
                  "operacao": oper_entry.get(),
                  "emitente": emt_entry.get(),
                  "tipo_operacao": cb_tipo.get(),
