@@ -21,6 +21,28 @@ def Tela_Emissao(instance):
         entry_valor_pis.delete(0, tk.END)
         entry_descontos.delete(0, tk.END)
         entry_observacoes.delete(0, tk.END)
+    
+    def salvar_emissao():
+        dados = {"cfop": entry_CFOP.get(),
+                 "produto_servico": entry_produto.get(),
+                 "valor_produto": entry_valor_produto.get(),
+                 "tributacao_icms": entry_tributacao.get(),
+                 "valor_icms": entry_valor_icm.get(),
+                 "valor_ipi": entry_valor_ipi.get(),
+                 "valor_pis": entry_valor_pis.get(),
+                 "descontos": entry_descontos.get(),
+                 "observacoes": entry_observacoes.get()
+                 }
+
+        if all (dados.values()):
+            emissao = Emissoes()
+            if dados:
+                emissao.create(dados)
+            messagebox.showinfo("Sucesso", "Dados salvos com sucesso!")
+            print("Dados salvos:", dados)
+        else:
+            messagebox.showwarning("Aviso", "Preencha todos os campos!")  
+
 
     #Label e Entrada CFOP
     label_CFOP = Label(instance.frame_1, text="CFOP:",bg=instance.color_2,fg=instance.color_3,
@@ -104,7 +126,7 @@ def Tela_Emissao(instance):
 
     #Botões/ Emitir / Limpar
     botao_emitir = Button(instance.frame_1, text="Emitir",font=("Arial", 12, 'bold'), background=instance.color_4,
-                          foreground="black", width=20)
+                          foreground="black", width=20, command=salvar_emissao)
     botao_emitir.place(x=450,y=540)
 
     #Botão Limpar
