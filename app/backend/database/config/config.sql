@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS arquivos (
 
 CREATE TABLE IF NOT EXISTS emissoes (
                         id_emissao INTEGER PRIMARY KEY AUTOINCREMENT,
+                        codigo INTEGER NOT NULL UNIQUE,
                         cfop INTEGER NOT NULL,
                         produto_servico TEXT NOT NULL,
                         valor_produto REAL NOT NULL,

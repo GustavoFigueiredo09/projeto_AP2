@@ -25,6 +25,9 @@ class Emissoes(BaseCRUD):
     
     def busca_por_produto_servico(self, produto_servico):
         return super().read(filtro=f'produto_servico LIKE "%{produto_servico}%"')
+    
+    def del_emissao(self, codigo):
+        super().delete(filtro=f'codigo = {codigo}')
 
 
 if __name__ == '__main__':
@@ -34,3 +37,4 @@ if __name__ == '__main__':
     print(emissao.busca_por_valor_prod(250))
     print(emissao.busca_por_produtos_caros(info_tipo='valor_produto'))
     print(emissao.busca_por_produto_servico('Venda de cadeiras'))
+    print(emissao.del_emissao(89012345678901))
