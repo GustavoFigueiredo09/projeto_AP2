@@ -29,9 +29,12 @@ def Cadastro_Terceiros(instance):
 
     def carregar_dados_tabela(filtro=None):
         terceiro = Terceiros()
-        dados_terceiros = terceiro.read() if filtro is None else terceiro.read(f"razao LIKE '%{filtro}%' OR nome_fantasia LIKE '%{filtro}%'")
         
-        tree.delete(*tree.get_children())
+        # Chama o novo método buscar_por_nome() que aplica o filtro corretamente
+        dados_terceiros = terceiro.buscar_por_nome(filtro)
+
+        tree.delete(*tree.get_children())  # Limpa a tabela antes de inserir os novos dados
+
         for t in dados_terceiros:
             tree.insert("", "end", values=(t['razao'], t['nome_fantasia'], t['email'], t['telefone'], t['cpf_cnpj']))
 
@@ -47,19 +50,20 @@ def Cadastro_Terceiros(instance):
     def abrir_janela_terceiro(dados=None):
         def salvar():
             novo_dados = {
-                "razao": razao_entry.get(),
-                "nome_fantasia": nome_entry.get(),
-                "email": email_entry.get(),
-                "telefone": contato_entry.get(),
-                "cpf_cnpj": cpf_cnpj_entry.get()
+                "razao": razao_entry.get().strip(),
+                "nome_fantasia": nome_entry.get().strip(),
+                "email": email_entry.get().strip(),
+                "telefone": contato_entry.get().strip(),
+                "cpf_cnpj": cpf_cnpj_entry.get().strip(),
+                "categoria": categoria_entry.get().strip()
             }
-            
+
             if all(novo_dados.values()):
                 terceiro = Terceiros()
                 if dados:
                     terceiro.update(novo_dados, f"razao = '{dados['razao']}'")
                 else:
-                    terceiro.create(novo_dados)
+                    terceiro.create_terceiro(novo_dados)
                 messagebox.showinfo("Sucesso", "Dados salvos com sucesso!")
                 cadastro_window.destroy()
                 carregar_dados_tabela()
@@ -71,7 +75,7 @@ def Cadastro_Terceiros(instance):
 
         # Definir tamanho e centralizar a janela
         width = 400
-        height = 450
+        height = 500
         screen_width = instance.frame_1.winfo_screenwidth()
         screen_height = instance.frame_1.winfo_screenheight()
         x_position = (screen_width // 2) - (width // 2)
@@ -79,7 +83,7 @@ def Cadastro_Terceiros(instance):
         cadastro_window.geometry(f"{width}x{height}+{x_position}+{y_position}")
 
         # Campos de entrada
-        labels = ["Razão Social", "Nome Fantasia", "Email", "Contato", "CPF/CNPJ"]
+        labels = ["Razão Social", "Nome Fantasia", "Email", "Contato", "CPF/CNPJ", "Categoria"]
         entries = []
 
         for i, label_text in enumerate(labels):
@@ -91,7 +95,7 @@ def Cadastro_Terceiros(instance):
             entries.append(entry)
 
         # Mapeando os campos às variáveis corretas
-        razao_entry, nome_entry, email_entry, contato_entry, cpf_cnpj_entry = entries
+        razao_entry, nome_entry, email_entry, contato_entry, cpf_cnpj_entry, categoria_entry = entries
 
         # Botão para salvar
         salvar_button = Button(cadastro_window, text="Salvar", font=(instance.font_4, 12), command=salvar, bg="#67a516", fg="white")
@@ -126,25 +130,34 @@ def Cadastro_Terceiros(instance):
                 entry.pack(pady=5, padx=20, anchor="w")
                 entries.append(entry)
 
+            # Mapeamento dos campos
+            razao_entry, nome_entry, email_entry, telefone_entry, cpf_cnpj_entry = entries
+
             # Função para salvar alterações
             def salvar_edicao():
-                dados_editados = {
-                    "razao": entries[0].get(),
-                    "nome_fantasia": entries[1].get(),
-                    "email": entries[2].get(),
-                    "telefone": entries[3].get(),
-                    "cpf_cnpj": entries[4].get(),
-                }
+                try:
+                    telefone = int(telefone_entry.get()) if telefone_entry.get().isdigit() else None  # Converte telefone para INT
 
-                if all(dados_editados.values()):  # Verifica se todos os campos estão preenchidos
-                    terceiro = Terceiro()
-                    terceiro.update(dados_editados, f'cpf_cnpj = "{item_values[4]}"')  # Usa o CPF/CNPJ como identificador
+                    dados_editados = {
+                        "razao": razao_entry.get(),
+                        "nome_fantasia": nome_entry.get(),
+                        "email": email_entry.get(),
+                        "telefone": telefone,
+                        "cpf_cnpj": cpf_cnpj_entry.get(),
+                    }
 
-                    messagebox.showinfo("Sucesso", "Terceiro editado com sucesso!")
-                    editar_window.destroy()
-                    carregar_dados_tabela()
-                else:
-                    messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
+                    if all(dados_editados.values()):  # Verifica se todos os campos estão preenchidos
+                        terceiro = Terceiros()
+                        terceiro.update(dados_editados, f'cpf_cnpj = "{item_values[4]}"')  # Atualiza com CPF/CNPJ como identificador
+
+                        messagebox.showinfo("Sucesso", "Terceiro editado com sucesso!")
+                        editar_window.destroy()
+                        carregar_dados_tabela()  # Atualiza a tabela na interface
+                    else:
+                        messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
+                
+                except ValueError:
+                    messagebox.showerror("Erro", "O telefone deve ser um número válido.")
 
             # Botão para salvar as edições
             salvar_button = Button(editar_window, text="Salvar", font=(instance.font_4, 12), command=salvar_edicao, bg="#67a516", fg="white")
