@@ -65,37 +65,37 @@ def Cadastro_Terceiros(instance):
                 carregar_dados_tabela()
             else:
                 messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
-        
+
         cadastro_window = Toplevel(instance.frame_1)
         cadastro_window.title("Editar Terceiro" if dados else "Novo Terceiro")
-        cadastro_window.geometry("400x400")
-        
-        Label(cadastro_window, text="Razão Social").pack()
-        razao_entry = Entry(cadastro_window, width=30)
-        razao_entry.pack()
-        razao_entry.insert(0, dados["razao"] if dados else "")
-        
-        Label(cadastro_window, text="Nome Fantasia").pack()
-        nome_entry = Entry(cadastro_window, width=30)
-        nome_entry.pack()
-        nome_entry.insert(0, dados["nome_fantasia"] if dados else "")
-        
-        Label(cadastro_window, text="Email").pack()
-        email_entry = Entry(cadastro_window, width=30)
-        email_entry.pack()
-        email_entry.insert(0, dados["email"] if dados else "")
-        
-        Label(cadastro_window, text="Contato").pack()
-        contato_entry = Entry(cadastro_window, width=30)
-        contato_entry.pack()
-        contato_entry.insert(0, dados["telefone"] if dados else "")
-        
-        Label(cadastro_window, text="CPF/CNPJ").pack()
-        cpf_cnpj_entry = Entry(cadastro_window, width=30)
-        cpf_cnpj_entry.pack()
-        cpf_cnpj_entry.insert(0, dados["cpf_cnpj"] if dados else "")
-        
-        Button(cadastro_window, text="Salvar", command=salvar, bg="#67a516", fg="white").pack()
+
+        # Definir tamanho e centralizar a janela
+        width = 400
+        height = 450
+        screen_width = instance.frame_1.winfo_screenwidth()
+        screen_height = instance.frame_1.winfo_screenheight()
+        x_position = (screen_width // 2) - (width // 2)
+        y_position = (screen_height // 2) - (height // 2)
+        cadastro_window.geometry(f"{width}x{height}+{x_position}+{y_position}")
+
+        # Campos de entrada
+        labels = ["Razão Social", "Nome Fantasia", "Email", "Contato", "CPF/CNPJ"]
+        entries = []
+
+        for i, label_text in enumerate(labels):
+            label = Label(cadastro_window, text=label_text, font=(instance.font_4, 12))
+            label.pack(pady=5, padx=20, anchor="w")
+            entry = Entry(cadastro_window, width=30, font=(instance.font_4, 14))
+            entry.insert(0, dados[label_text.lower().replace(" ", "_")] if dados else "")
+            entry.pack(pady=5, padx=20, anchor="w")
+            entries.append(entry)
+
+        # Mapeando os campos às variáveis corretas
+        razao_entry, nome_entry, email_entry, contato_entry, cpf_cnpj_entry = entries
+
+        # Botão para salvar
+        salvar_button = Button(cadastro_window, text="Salvar", font=(instance.font_4, 12), command=salvar, bg="#67a516", fg="white")
+        salvar_button.pack(pady=20)
 
     def editar_terceiro():
         selected_item = tree.selection()
@@ -107,7 +107,7 @@ def Cadastro_Terceiros(instance):
 
             # Definição do tamanho e centralização da janela
             width = 400
-            height = 500
+            height = 450
             screen_width = instance.frame_1.winfo_screenwidth()
             screen_height = instance.frame_1.winfo_screenheight()
             x_position = (screen_width // 2) - (width // 2)
