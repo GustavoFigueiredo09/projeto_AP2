@@ -101,14 +101,55 @@ def Cadastro_Terceiros(instance):
         selected_item = tree.selection()
         if selected_item:
             item_values = tree.item(selected_item, "values")
-            dados = {
-                "razao": item_values[0],
-                "nome_fantasia": item_values[1],
-                "email": item_values[2],
-                "telefone": item_values[3],
-                "cpf_cnpj": item_values[4]
-            }
-            abrir_janela_terceiro(dados)
+
+            editar_window = Toplevel(instance.frame_1)
+            editar_window.title("Editar Terceiro")
+
+            # Definição do tamanho e centralização da janela
+            width = 400
+            height = 500
+            screen_width = instance.frame_1.winfo_screenwidth()
+            screen_height = instance.frame_1.winfo_screenheight()
+            x_position = (screen_width // 2) - (width // 2)
+            y_position = (screen_height // 2) - (height // 2)
+            editar_window.geometry(f"{width}x{height}+{x_position}+{y_position}")
+
+            # Campos de entrada
+            labels = ["Razão Social", "Nome Fantasia", "Email", "Telefone", "CPF/CNPJ"]
+            entries = []
+
+            for i, label_text in enumerate(labels):
+                label = Label(editar_window, text=label_text, font=(instance.font_4, 12))
+                label.pack(pady=5, padx=20, anchor="w")
+                entry = Entry(editar_window, width=30, font=(instance.font_4, 14))
+                entry.insert(0, item_values[i])
+                entry.pack(pady=5, padx=20, anchor="w")
+                entries.append(entry)
+
+            # Função para salvar alterações
+            def salvar_edicao():
+                dados_editados = {
+                    "razao": entries[0].get(),
+                    "nome_fantasia": entries[1].get(),
+                    "email": entries[2].get(),
+                    "telefone": entries[3].get(),
+                    "cpf_cnpj": entries[4].get(),
+                }
+
+                if all(dados_editados.values()):  # Verifica se todos os campos estão preenchidos
+                    terceiro = Terceiro()
+                    terceiro.update(dados_editados, f'cpf_cnpj = "{item_values[4]}"')  # Usa o CPF/CNPJ como identificador
+
+                    messagebox.showinfo("Sucesso", "Terceiro editado com sucesso!")
+                    editar_window.destroy()
+                    carregar_dados_tabela()
+                else:
+                    messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
+
+            # Botão para salvar as edições
+            salvar_button = Button(editar_window, text="Salvar", font=(instance.font_4, 12), command=salvar_edicao, bg="#67a516", fg="white")
+            salvar_button.pack(pady=20)
+
         else:
             messagebox.showerror("Erro", "Selecione um terceiro para editar.")
     
