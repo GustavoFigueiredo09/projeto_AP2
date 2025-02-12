@@ -9,16 +9,12 @@ def Tela_Lancamentos(root):
     for widget in root.frame_1.winfo_children():
         widget.destroy()
 
-
-    # Funções
-    def scanear():
-        # Simula o escaneamento de um código
-        entry_codigo.delete(0, tk.END)
-        entry_codigo.insert(0, "000122457554412")
+    style = ttk.Style()
+    style.configure("Custom.TCombobox", font=("Arial", 14))  
 
     def salvar():
-        dados = {"codigo":entry_codigo.get(),
-                 "data": data_entry.get(),
+        dados = {"data": data_entry.get(),
+                #  "codigo":entry_codigo.get(),
                  "valor_total": nota_entry.get(),
                  "valor_pago": produto_entry.get(),
                  "impostos": imp_entry.get(),
@@ -38,7 +34,7 @@ def Tela_Lancamentos(root):
 
     def limpar_tudo():
         # Limpa todos os campos
-        entry_codigo.delete(0, tk.END)
+        # entry_codigo.delete(0, tk.END)
         data_entry.delete(0,tk.END)
         nota_entry.delete(0,tk.END)
         produto_entry.delete(0,tk.END)
@@ -46,20 +42,13 @@ def Tela_Lancamentos(root):
         oper_entry.delete(0,tk.END)
         emt_entry.delete(0,tk.END)
         cb_tipo.delete(0, tk.END)
+        cb_banco.delete(0, tk.END)
         desc_entry.delete(0,tk.END)
         
-    #defexcluir_lancamento():
-
-    
-    # Botão para escanear
-    btn_scanear = tk.Button(root.frame_1, text="Scanear", bg="#66CC33", fg="white", font=("Arial bold", 12), command=scanear)
-    btn_scanear.place(x=890, y=70, width=100, height=25)
-
-    # Campo para exibir o código escaneado
-    entry_codigo = ctk.CTkEntry(root.frame_1, font=("Arial", 12), 
-                                width=500, corner_radius=5,fg_color="white",text_color="black",placeholder_text="Código do arquivo")
-    entry_codigo.place(x=350, y=70)
-
+    #def excluir_lancamento():
+    # 
+    # 
+    # 
     #Labels & Entradas 
     lbl_data = tk.Label(root.frame_1, text="Data:", bg="#FDFDE3", font=("Helvetica",12,"bold"))
     lbl_data.place(x=304,y=160)
@@ -101,14 +90,21 @@ def Tela_Lancamentos(root):
     lbl_tipo.place(x=664,y=160)
 
     opcoes = ["Entrada", "Saída"]
-    cb_tipo = ttk.Combobox(root.frame_1, values=opcoes, width=30)
+    cb_tipo = ttk.Combobox(root.frame_1, values=opcoes, width=40, style="Custom.TCombobox")
     cb_tipo.place(x=810,y=160)
 
+    lbl_banco = tk.Label(root.frame_1, text="Banco:", bg="#FDFDE3", font=("Helvetica",12,"bold"))
+    lbl_banco.place(x=720,y=210)
+
+    opcoes_banco = ["Nubank", "Pic-Pay", "Inter", "Itaú", "Mercado Pago", "Caixa", "Will"]
+    cb_banco = ttk.Combobox(root.frame_1, values=opcoes_banco, width=40)
+    cb_banco.place(x=810,y=210)
+
     lbl_descricao = tk.Label(root.frame_1, text="Descrição:", bg="#FDFDE3", font=("Helvetica",12,"bold"))
-    lbl_descricao.place(x=720,y=210)
+    lbl_descricao.place(x=720,y=260)
     desc_entry = ctk.CTkEntry(root.frame_1, font=("Arial", 12), width=200, 
                              fg_color="white", text_color="black")
-    desc_entry.place(x=810,y=210)
+    desc_entry.place(x=810,y=260)
 
     # Botões
     btn_salvar = tk.Button(root.frame_1, text="Salvar", bg="#66CC33", fg="white", font=("Arial", 12),command=salvar)
@@ -119,4 +115,3 @@ def Tela_Lancamentos(root):
 
     btn_Excluir = tk.Button(root.frame_1, text="Excluir Lançamento",bg="#A60808", fg="white", font=("Arial"))
     btn_Excluir.place(x=800,y=500,height=40)
-
