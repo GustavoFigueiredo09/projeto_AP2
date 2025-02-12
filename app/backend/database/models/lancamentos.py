@@ -18,7 +18,7 @@ class Lancamento(BaseCRUD):
         return super().read(filtro=f'operacao = "saida"', info=info_tipo)
 
     def remove_por_codigo(self, codigo):
-        super().delete(filtro=f'codigo = {codigo}')
+        super().delete(filtro=f'codigo = "{codigo}"')
 
 if __name__ == '__main__':
     b = Lancamento()
