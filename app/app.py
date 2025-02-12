@@ -7,10 +7,8 @@ from tela_login import LoginScreen  # Importando a tela de login
 from tela_lancamentos import Tela_Lancamentos  # Importando a tela Lançamentos
 from tela_relatorios import Tela_Relatorios  # Importando a tela RelatoriosS
 from tela_arquivos import Tela_Arquivos  # Importando a tela Arquivos
-from tela_emissao import Tela_Emissao  # Importando a tela Emissão
 from cadastro_usuario import Cadastro_Usuario  # Importa a tela de cadastro de usuários
 from cadastro_terceiros import Cadastro_Terceiros  # Importa a tela de cadastro de terceiros
-from tela_contas import Tela_Contas # importando a tela Contas Bancarias
 
 class Cactus_Fiscal:
     def __init__(self, root):
@@ -52,10 +50,6 @@ class Cactus_Fiscal:
         
         edit.add_separator()
         edit.add_command(label='Arquivos', command=lambda: Tela_Arquivos(self))
-        edit.add_separator()
-        edit.add_command(label='Bancos', command=lambda: Tela_Contas(self))
-        edit.add_separator()
-        edit.add_command(label='Emissão', command=lambda: Tela_Emissao(self))
         
         # Sobre dentro do menu principal
         edit.add_separator()
