@@ -1,7 +1,6 @@
 -- DROP TABLE usuarios;
 -- DROP TABLE arquivos;
 -- DROP TABLE terceiros;
--- DROP TABLE emissoes;
 -- DROP TABLE lancamentos;
 
 CREATE TABLE IF NOT EXISTS usuarios (
@@ -38,24 +37,6 @@ CREATE TABLE IF NOT EXISTS arquivos (
                         nome_arquivo TEXT NOT NULL,
                         arquivo BLOB NOT NULL,
                         FOREIGN KEY (id_arquivo) REFERENCES usuarios(id_usuario));
-
-CREATE TABLE IF NOT EXISTS emissoes (
-                        id_emissao INTEGER PRIMARY KEY AUTOINCREMENT,
-                        codigo INTEGER NOT NULL UNIQUE,
-                        cfop INTEGER NOT NULL,
-                        produto_servico TEXT NOT NULL,
-                        valor_produto REAL NOT NULL,
-                        tributacao_icms TEXT NOT NULL,
-                        valor_icms REAL NOT NULL,
-                        valor_ipi REAL NOT NULL,
-                        valor_pis REAL NOT NULL,
-                        descontos REAL NOT NULL,
-                        observacoes TEXT);
-
-CREATE TABLE IF NOT EXISTS bancos (
-                        id_banco INTEGER PRIMARY KEY AUTOINCREMENT,
-                        conta INTEGER NOT NULL,
-                        banco TEXT NOT NULL);
 
 
 
