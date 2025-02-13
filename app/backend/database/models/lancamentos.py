@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 if __name__ == '__main__':
     from mainCRUD import BaseCRUD

@@ -3,7 +3,9 @@ from tkinter import ttk
 import tkinter as tk
 import customtkinter as ctk
 from tkinter import messagebox
+from tkcalendar import Calendar
 from backend.database.models.lancamentos import Lancamento
+
 def Tela_Lancamentos(root):
     # Limpa tela anterior
     for widget in root.frame_1.winfo_children():
@@ -45,7 +47,7 @@ def Tela_Lancamentos(root):
         cb_tipo.delete(0, tk.END)
         cb_banco.delete(0, tk.END)
         desc_entry.delete(0,tk.END)
-        
+    
     def excluir_lancamento():
         codigo = entry_cod.get().strip()
         print(codigo)
@@ -61,9 +63,33 @@ def Tela_Lancamentos(root):
   
         except:
             messagebox.showwarning("Aviso", "Nenhum lançamento encontrado com esse código!")
-        
+    
 
-   
+    def abrir_calendario():
+    
+        def selecionar_data():
+            # Insere a data selecionada no campo de entrada e fecha o calendário.
+            data_entry.delete(0, tk.END)
+            data_entry.insert(0, cal.get_date())
+            top.destroy()
+
+        # Criando a janela do calendário
+        top = tk.Toplevel(root.frame_1)
+        top.title("Selecionar Data")
+
+        largura = 200
+        altura = 240
+        pos_x = 420  # Posição X na tela
+        pos_y = 230  # Posição Y na tela
+        top.geometry(f"{largura}x{altura}+{pos_x}+{pos_y}")  # Define tamanho e posição
+        top.maxsize(200,240)
+
+        cal = Calendar(top, date_pattern="dd-mm-yyyy")  # Define o formato da data
+        cal.pack(pady=10)
+
+        ttk.Button(top, text="Selecionar", command=selecionar_data).pack(pady=5)
+
+
     #Labels & Entradas 
     label_lancamento = Label(root.frame_1, text="Tela de Lançamentos", font=("Arial", 15, "bold"),bg="#FDFDE3")
     label_lancamento.place(x=600,y=10)
@@ -138,3 +164,6 @@ def Tela_Lancamentos(root):
 
     btn_Excluir = tk.Button(root.frame_1, text="Excluir Lançamento",bg="#A60808", fg="white", font=("Arial"), command=excluir_lancamento)
     btn_Excluir.place(x=800,y=500,height=40)
+
+    btn_calendario = ttk.Button(root.frame_1, text="Data",command=abrir_calendario)
+    btn_calendario.place(x=265,y=160)
