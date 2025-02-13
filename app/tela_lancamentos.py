@@ -58,9 +58,7 @@ def Tela_Lancamentos(root):
             limpar_tudo()
         else:
             messagebox.showwarning("Aviso", "Nenhum lançamento encontrado com esse código!")
-
-
-   
+  
     #Labels & Entradas 
     label_lancamento = Label(root.frame_1, text="Tela de Lançamentos", font=("Arial", 15, "bold"),bg="#FDFDE3")
     label_lancamento.place(x=600,y=10)
