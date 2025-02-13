@@ -1,3 +1,5 @@
+import datetime
+
 if __name__ == '__main__':
     from mainCRUD import BaseCRUD
 else:
@@ -19,6 +21,15 @@ class Lancamento(BaseCRUD):
 
     def remove_por_codigo(self, codigo):
         super().delete(filtro=f'codigo = "{codigo}"')
+
+
+    def create(self, dados_dict):
+
+        data_original = dados_dict['data']
+        data_formatada = datetime.strptime(data_original, "%d-%m-%Y").strftime("%Y-%m-%d")
+
+        dados_dict['data'] = data_formatada
+        return super().create(dados_dict)
 
 if __name__ == '__main__':
     b = Lancamento()
