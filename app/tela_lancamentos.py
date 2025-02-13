@@ -13,14 +13,15 @@ def Tela_Lancamentos(root):
     style.configure("Custom.TCombobox", font=("Arial", 14))  
 
     def salvar():
-        dados = {"data": data_entry.get(),
-                #  "codigo":entry_codigo.get(),
+        dados = {"codigo":entry_cod.get(),
+                 "data": data_entry.get(),
                  "valor_total": nota_entry.get(),
                  "valor_pago": produto_entry.get(),
                  "impostos": imp_entry.get(),
                  "operacao": oper_entry.get(),
                  "emitente": emt_entry.get(),
                  "tipo_operacao": cb_tipo.get(),
+                 "banco": cb_banco.get(),
                  "descricao": desc_entry.get()
         }
         if all(dados.values()):  
@@ -34,7 +35,7 @@ def Tela_Lancamentos(root):
 
     def limpar_tudo():
         # Limpa todos os campos
-        # entry_codigo.delete(0, tk.END)
+        entry_cod.delete(0, tk.END)
         data_entry.delete(0,tk.END)
         nota_entry.delete(0,tk.END)
         produto_entry.delete(0,tk.END)
@@ -47,18 +48,20 @@ def Tela_Lancamentos(root):
         
     def excluir_lancamento():
         codigo = entry_cod.get().strip()
+        print(codigo)
+        lancamento = Lancamento()  # Criando um objeto da classe Lancamento
 
         if not codigo:
             messagebox.showwarning("Aviso", "Digite um código antes de excluir!")
             return
 
-        lancamento = Lancamento()  # Criando um objeto da classe Lancamento
-        if lancamento.delete(codigo):  # Chama diretamente a função delete
+        try: 
+            lancamento.remove_por_codigo(codigo) # Chama diretamente a função
             messagebox.showinfo("Sucesso", "Lançamento excluído com sucesso!")
-            limpar_tudo()
-        else:
+  
+        except:
             messagebox.showwarning("Aviso", "Nenhum lançamento encontrado com esse código!")
-
+        
 
    
     #Labels & Entradas 
@@ -133,5 +136,5 @@ def Tela_Lancamentos(root):
     btn_limpar = tk.Button(root.frame_1, text="Limpar Tudo", bg="#66CC33", fg="white", font=("Arial", 12), command=limpar_tudo)
     btn_limpar.place(x=600, y=500, width=120, height=40)
 
-    btn_Excluir = tk.Button(root.frame_1, text="Excluir Lançamento",bg="#A60808", fg="white", font=("Arial"))
+    btn_Excluir = tk.Button(root.frame_1, text="Excluir Lançamento",bg="#A60808", fg="white", font=("Arial"), command=excluir_lancamento)
     btn_Excluir.place(x=800,y=500,height=40)

@@ -34,14 +34,14 @@ def Tela_Relatorios(instance):
         
     #Frame para o gráfico
     instance.graph_frame = Frame(instance.frame_1, width=400, height=400, bg="white")
-    instance.graph_frame.place(x=400, y=130)
+    instance.graph_frame.place(x=300, y=100)
 
 def grafico(instance, mes):
     for widget in instance.graph_frame.winfo_children():
         widget.destroy()
 
     # Criar figura do matplotlib
-    fig, ax = plt.subplots(figsize=(5, 4))
+    fig, ax = plt.subplots(figsize=(8, 6))
     x = 0.5 + np.arange(8)
     y = [4.8, 5.5, 3.5, 4.6, 6.5, 6.6, 2.6, 3.0]
     ax.bar(x, y, width=1, edgecolor="white", linewidth=0.7)
