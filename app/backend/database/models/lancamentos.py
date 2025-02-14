@@ -23,15 +23,59 @@ class Lancamento(BaseCRUD):
         super().delete(filtro=f'codigo = "{codigo}"')
 
 
-    def create(self, dados_dict):
+    def busca_soma_entradas(self):
+        comando = f"""  SELECT 
+                            strftime('%Y-%m', data) AS mes,
+                            SUM(valor_pago) AS total_entrada
+                        FROM lancamentos
+                        WHERE tipo_operacao = "entrada"
+                        GROUP BY mes
+                        ORDER BY mes"""
 
-        data_original = dados_dict['data']
-        data_formatada = datetime.strptime(data_original, "%d-%m-%Y").strftime("%Y-%m-%d")
+        return super().custom_command(comando=comando)
+    
+    def busca_soma_saidas(self):
 
-        dados_dict['data'] = data_formatada
-        return super().create(dados_dict)
+        comando = f"""  SELECT 
+                            strftime('%Y-%m', data) AS mes,
+                            SUM(valor_pago) AS total_saida
+                        FROM lancamentos
+                        WHERE tipo_operacao = "saida"
+                        GROUP BY mes
+                        ORDER BY mes"""
+
+        return super().custom_command(comando=comando)
+    
+    def busca_soma_impostos(self):
+
+        comando = f"""  SELECT 
+                            strftime('%Y-%m', data) AS mes,
+                            SUM(impostos) AS total_imposto
+                        FROM lancamentos
+                        WHERE tipo_operacao = "saida"
+                        GROUP BY mes
+                        ORDER BY mes"""
+
+        return super().custom_command(comando=comando)
+    
+    def busca_ganho_total(self):
+
+        comando = f"""SELECT 
+                            strftime('%Y-%m', data) AS mes,
+                            SUM(CASE WHEN tipo_operacao = "entrada" THEN valor_pago ELSE 0 END) - 
+                            SUM(CASE WHEN tipo_operacao = "saida" THEN valor_pago + impostos ELSE 0 END)  AS saldo_mensal
+                            FROM lancamentos
+                            GROUP BY mes
+                            ORDER BY mes;"""
+
+        return super().custom_command(comando=comando)
 
 if __name__ == '__main__':
     b = Lancamento()
-    print(b.busca_por_emitente('Robson'))
-    print(b.busca_por_entrada())
+    # print(b.busca_por_emitente('Robson'))
+    # print(b.busca_por_entrada())
+    print(b.busca_soma_entradas())
+    # print(b.busca_soma_saidas())
+    # print(b.busca_soma_impostos())
+    # print(b.busca_ganho_total())
+    # b.remove_por_codigo(1234567)
