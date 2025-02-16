@@ -84,7 +84,7 @@ def Tela_Lancamentos(root):
         top.geometry(f"{largura}x{altura}+{pos_x}+{pos_y}")  # Define tamanho e posição
         top.maxsize(200,240)
 
-        cal = Calendar(top, date_pattern="dd-mm-yyyy")  # Define o formato da data
+        cal = Calendar(top, date_pattern="yyyy-mm-dd")  # Define o formato da data
         cal.pack(pady=10)
 
         ttk.Button(top, text="Selecionar", command=selecionar_data).pack(pady=5)
