@@ -86,22 +86,6 @@ class Cactus_Fiscal:
         for widget in self.frame_1.winfo_children():
             widget.destroy()
 
-    # Selecionando arquivos da memória
-    def Select_Arquivo(self):
-        selected_files = filedialog.askopenfilenames(initialdir="/",
-                                                     title="Selecione um arquivo PDF", filetypes=(("PDF files", "*.pdf*"),))
-        if selected_files:
-            for path in selected_files:
-                print(path)
-                
-        return selected_files
-    
-    # Exclui itens da lista de arquivos selecionados
-    def delete_list_items(self):
-        selected_items = self.Arquivo_Lista.curselection()
-        for index in selected_items[::-1]:
-            self.Arquivo_Lista.delete(index)
-
     # Saindo do sistema após clicar no botão "sair" com confirmação
     def Exit(self):
         if messagebox.askyesno("Confirmação", "Tem certeza que deseja sair?"):
