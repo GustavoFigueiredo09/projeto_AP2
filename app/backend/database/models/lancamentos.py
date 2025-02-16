@@ -38,7 +38,7 @@ class Lancamento(BaseCRUD):
 
         comando = f"""  SELECT 
                             strftime('%Y-%m', data) AS mes,
-                            SUM(valor_pago) AS total_saida
+                            SUM(valor_pago*-1) AS total_saida
                         FROM lancamentos
                         WHERE tipo_operacao = "saida"
                         GROUP BY mes

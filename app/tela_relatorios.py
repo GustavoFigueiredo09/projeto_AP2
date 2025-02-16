@@ -20,7 +20,7 @@ def Tela_Relatorios(instance):
     botao_atualizar.place(x=520,y=570)
 
     #Frame para o gráfico
-    instance.graph_frame = Frame(instance.frame_1, width=600, height=400, bg="white")
+    instance.graph_frame = Frame(instance.frame_1, width=800, height=400, bg="white")
     instance.graph_frame.place(relx=0.5, rely=0.45, anchor=CENTER)
 
     iniciar_thread(instance)
