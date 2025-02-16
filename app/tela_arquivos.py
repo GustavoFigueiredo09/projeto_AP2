@@ -81,10 +81,20 @@ def Load_Saved_Arquivos(instance):
         instance.Arquivo_Lista2.insert(END, arquivo['nome_arquivo'])
 
 def Delete_Arquivo(instance):
+    # Excluir da lista de arquivos salvos (Arquivo_Lista2)
     selecionados = instance.Arquivo_Lista2.curselection()
     for index in selecionados[::-1]:
         nome_arquivo = instance.Arquivo_Lista2.get(index)
+        # Excluindo do banco de dados
         instance.arquivo_crud.excluir_arquivo(nome_arquivo)
+        # Removendo o arquivo da lista na interface gráfica
         instance.Arquivo_Lista2.delete(index)
+    
+    # Excluir também da lista de arquivos selecionados (Arquivo_Lista)
+    arquivos_selecionados = instance.Arquivo_Lista.curselection()
+    for index in arquivos_selecionados[::-1]:
+        instance.Arquivo_Lista.delete(index)
+    
+    # Atualizando a lista de arquivos salvos após a exclusão
     Load_Saved_Arquivos(instance)
 
