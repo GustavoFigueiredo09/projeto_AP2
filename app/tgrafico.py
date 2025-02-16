@@ -11,15 +11,16 @@ def atualizar_grafico(instance):
 
     lancamentos = Lancamento()
     # Dados de cada categoria (supondo que cada método retorne uma lista de tuplas)
-    dados = {
-        "ganhos": lancamentos.busca_ganho_total(), 
-        "entradas": lancamentos.busca_soma_entradas(),
-        "saidas": lancamentos.busca_soma_saidas(), 
-        "impostos": lancamentos.busca_soma_impostos()
+
+    saldo = lancamentos.busca_ganho_total()
+    dados = { 
+        "Entradas": lancamentos.busca_soma_entradas(),
+        "Saidas": lancamentos.busca_soma_saidas(), 
+        "Impostos": lancamentos.busca_soma_impostos()
     }
 
     # Paleta de cores para cada categoria
-    cores = ["#1effff", "#2a9d8f", "#ffadad", "#eeee13"]
+    cores = ["#86cf05", "#C70039", "#FFC300"]
 
     # Criar figura
     fig, ax = plt.subplots(figsize=(10, 4))
@@ -30,7 +31,11 @@ def atualizar_grafico(instance):
         # Converte as datas e extrai os valores
         datas = [datetime.strptime(mes + "-01", "%Y-%m-%d") for mes, _ in valores]
         montantes = [valor for _, valor in valores]
-        ax.plot(datas, montantes, marker="o", linestyle="-", label=categoria, color=cor)
+        ax.plot(datas, montantes, marker="o", linestyle=":", label=categoria, color=cor)
+    
+    datas_ganhos = [datetime.strptime(mes + "-01", "%Y-%m-%d") for mes, _ in saldo]
+    montantes_ganhos = [valor for _, valor in saldo]
+    ax.plot(datas_ganhos, montantes_ganhos, marker="o", linestyle="-", label="Saldo", color="#0ca8fa")
 
     # Configurações do gráfico
     ax.set_xlabel("Meses")

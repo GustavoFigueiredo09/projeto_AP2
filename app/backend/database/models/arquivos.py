@@ -15,21 +15,20 @@ class Arquivo(BaseCRUD):
 
         id_usuario = self.custom_command(f'SELECT id_usuario WHERE login = "{usuario_login}"')
 
-        # caminho_arquivo = os.path.abspath(f'app/backend/files/{nome_do_arquivo}')
-        # with open(caminho_arquivo, "rb") as arquivo:
-        #     arquivo_blob = arquivo.read()
-
         dados_dict = {'id_arquivo': id_usuario, 'nome_arquivo': nome_do_arquivo, 'arquivo': arquivo_blob}
         return super().create(dados_dict)
         
         # Retornam vários arquivos com o nome informado, ou apenas 1
-    def busca_nome_do_arquivo(self, nome_arquivo):
-        arquivos = self.read(info='*', filtro=f'nome_arquivo = "{nome_arquivo}"')
+    def busca_nome_do_arquivo(self, usuario_login):
+        id_usuario = self.custom_command(f'SELECT id_usuario WHERE login = "{usuario_login}"')
+
+        arquivos = self.read(info='*', filtro=f'id_arquivo = {id_usuario}')
 
         return arquivos
         # Tipo de retorno: [{'nome_arquivo': 'teste.png'}, ...]
 
         # Busca arquivo com nome especifico no banco e salva diretamente na pasta 'Files'
+        
     def salva_arquivo_do_banco(self, usuario_login, nome_do_arquivo):
         
         comando = f'SELECT id_usuario FROM usuarios WHERE login LIKE ?'
