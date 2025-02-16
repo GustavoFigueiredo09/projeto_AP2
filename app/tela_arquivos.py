@@ -1,8 +1,14 @@
 from tkinter import *
+from session import SessaoUsuario
 
 def Tela_Arquivos(instance):
     # Limpa a tela
     instance.ClearScreen()
+
+    # chama o usuário guardado em session.py com o singleton
+    usuario_atual = SessaoUsuario().get_usuario() # Obtém os dados do usuário logado
+    if usuario_atual:
+        print(f"Usuário logado: {usuario_atual['nome']}")  # Imprime o usuário logado
 
     # Texto selecionar "Selecionar arquivos"
     select_label = Label(instance.frame_1, text="Selecione arquivos",

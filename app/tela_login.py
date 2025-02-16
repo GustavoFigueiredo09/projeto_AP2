@@ -2,6 +2,7 @@ import time
 from tkinter import messagebox
 import tkinter as tk
 from backend.database.models.usuarios import Usuario
+from session import SessaoUsuario
 
 class LoginScreen:
     def __init__(self, root, on_login_success):
@@ -62,8 +63,8 @@ class LoginScreen:
 
     # Validação de login com tentativas
     def validate_login(self):
-        username = self.user_entry.get()
-        password = self.pass_entry.get()
+        username = self.user_entry.get() # Pega o nome de usuário
+        password = self.pass_entry.get() # Pega a senha
 
         if not username or not password:
             messagebox.showwarning("Erro", "Usuário e senha são obrigatórios.")
@@ -73,13 +74,17 @@ class LoginScreen:
 
         # Login bem-sucedido
         if resultado:  
-            cargo = resultado[0].get('admin', 0)
+            usuario_info = resultado[0]  # Pega os dados do usuário autenticado
+            SessaoUsuario().set_usuario(usuario_info)  # Armazena os dados em session.py
+            
+            cargo = usuario_info.get('admin', 0)
             if cargo == 1:
                 messagebox.showinfo("Login", f"Bem-vindo Administrador {username}!")
-                self.on_login_success()
             else:
                 messagebox.showinfo("Login", f"Bem-vindo {username}!")
-                self.on_login_success()
+            
+            self.on_login_success()
+        
         # Login falhou
         else:  
             self.tentativas += 1
