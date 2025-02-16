@@ -92,8 +92,10 @@ class Cactus_Fiscal:
                                                      title="Selecione um arquivo PDF", filetypes=(("PDF files", "*.pdf*"),))
         if selected_files:
             for path in selected_files:
-                print(path) 
-
+                print(path)
+                
+        return selected_files
+    
     # Exclui itens da lista de arquivos selecionados
     def delete_list_items(self):
         selected_items = self.Arquivo_Lista.curselection()

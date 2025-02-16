@@ -30,7 +30,7 @@ def Tela_Lancamentos(root):
             lancamento = Lancamento()
             if dados:
                 if lancamento.read(filtro=f'codigo = {dados['codigo']}'):
-                    messagebox.showwarning("Aviso", "Dado já existe no banco! Favor inserir outro código de barras.")
+                    messagebox.showwarning("Aviso", "Dado já existe no banco! Favor inserir outro código.")
                     return
                 
                 lancamento.create(dados)

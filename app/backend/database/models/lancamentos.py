@@ -38,7 +38,7 @@ class Lancamento(BaseCRUD):
 
         comando = f"""  SELECT 
                             strftime('%Y-%m', data) AS mes,
-                            SUM(valor_pago*-1) AS total_saida
+                            SUM(valor_pago) AS total_saida
                         FROM lancamentos
                         WHERE tipo_operacao = "saida"
                         GROUP BY mes
@@ -63,7 +63,7 @@ class Lancamento(BaseCRUD):
         comando = f"""SELECT 
                             strftime('%Y-%m', data) AS mes,
                             SUM(CASE WHEN tipo_operacao = "entrada" THEN valor_pago ELSE 0 END) - 
-                            SUM(CASE WHEN tipo_operacao = "saida" THEN valor_pago + impostos ELSE 0 END)  AS saldo_mensal
+                            SUM(CASE WHEN tipo_operacao = "saida" THEN valor_pago ELSE 0 END)  AS saldo_mensal
                             FROM lancamentos
                             GROUP BY mes
                             ORDER BY mes;"""

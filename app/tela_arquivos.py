@@ -1,6 +1,7 @@
 from tkinter import *
 from session import SessaoUsuario
 
+
 def Tela_Arquivos(instance):
     # Limpa a tela
     instance.ClearScreen()
@@ -59,3 +60,14 @@ def Tela_Arquivos(instance):
     scrollbar2 = Scrollbar(instance.Arquivo_Lista2, orient="vertical")
     scrollbar2.config(command=instance.Arquivo_Lista2.yview)
     scrollbar2.pack(side="right", fill="y")
+
+
+
+
+def file_to_blob(tupla_caminhos):
+    blobs = []
+    for caminho in tupla_caminhos:
+        with open(caminho, "rb") as file:
+            blobs.append(file.read())
+    
+    return blobs
