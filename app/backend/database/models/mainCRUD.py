@@ -37,7 +37,7 @@ class BaseCRUD:
                 return dados_formatados
         except Exception as e:
             print(f'Erro no método read: {e}')
-            return []  # Retorna lista vazia em caso de erro
+            return None  # Retorna lista vazia em caso de erro
 
     # Atualiza
     def update(self, dados_dict, filtro):

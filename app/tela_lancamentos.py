@@ -29,6 +29,10 @@ def Tela_Lancamentos(root):
         if all(dados.values()):  
             lancamento = Lancamento()
             if dados:
+                if lancamento.read(filtro=f'codigo = {dados['codigo']}'):
+                    messagebox.showwarning("Aviso", "Dado já existe no banco! Favor inserir outro código de barras.")
+                    return
+                
                 lancamento.create(dados)
             messagebox.showinfo("Sucesso", "Dados salvos com sucesso!")
             print("Dados salvos:", dados)
