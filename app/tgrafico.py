@@ -12,13 +12,15 @@ def atualizar_grafico(instance):
     lancamentos = Lancamento()
     # Dados de cada categoria (supondo que cada método retorne uma lista de tuplas)
 
-    saldo = lancamentos.busca_ganho_total()
+    saldo = lancamentos.busca_saldo()
+    print(saldo)
     dados = { 
         "Entradas": lancamentos.busca_soma_entradas(),
         "Saidas": lancamentos.busca_soma_saidas(), 
         "Impostos": lancamentos.busca_soma_impostos()
     }
 
+    print(dados['Entradas'])
     # Paleta de cores para cada categoria
     cores = ["#86cf05", "#C70039", "#FFC300"]
 
@@ -31,18 +33,18 @@ def atualizar_grafico(instance):
         # Converte as datas e extrai os valores
         datas = [datetime.strptime(mes + "-01", "%Y-%m-%d") for mes, _ in valores]
         montantes = [valor for _, valor in valores]
-        ax.plot(datas, montantes, marker="o", linestyle=":", label=categoria, color=cor)
+        ax.plot(datas, montantes, marker="o", linestyle=":", label=categoria, color=cor, markersize=4, linewidth=1.5)
     
     datas_ganhos = [datetime.strptime(mes + "-01", "%Y-%m-%d") for mes, _ in saldo]
     montantes_ganhos = [valor for _, valor in saldo]
-    ax.plot(datas_ganhos, montantes_ganhos, marker="o", linestyle="-", label="Saldo", color="#0ca8fa")
+    ax.plot(datas_ganhos, montantes_ganhos, marker="o", linestyle="-", label="Saldo", color="#0ca8fa", markersize=5, linewidth=1.7)
 
     # Configurações do gráfico
     ax.set_xlabel("Meses")
     ax.set_ylabel("Valores (R$)")
     ax.set_title("Comparação Mensal: Ganhos, Entradas, Saídas e Impostos")
     ax.legend()
-    ax.grid(True)
+    ax.grid(True, linestyle='--', linewidth=0.5)
 
     # Formatando datas no eixo X
     ax.xaxis.set_major_locator(mdates.MonthLocator(interval=1))

@@ -58,7 +58,7 @@ class Lancamento(BaseCRUD):
 
         return super().custom_command(comando=comando)
     
-    def busca_ganho_total(self):
+    def busca_saldo(self):
 
         comando = f"""SELECT 
                             strftime('%Y-%m', data) AS mes,
