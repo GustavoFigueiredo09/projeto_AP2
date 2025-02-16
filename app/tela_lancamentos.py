@@ -29,6 +29,10 @@ def Tela_Lancamentos(root):
         if all(dados.values()):  
             lancamento = Lancamento()
             if dados:
+                if lancamento.read(filtro=f'codigo = {dados['codigo']}'):
+                    messagebox.showwarning("Aviso", "Dado já existe no banco! Favor inserir outro código de barras.")
+                    return
+                
                 lancamento.create(dados)
             messagebox.showinfo("Sucesso", "Dados salvos com sucesso!")
             print("Dados salvos:", dados)
@@ -84,7 +88,7 @@ def Tela_Lancamentos(root):
         top.geometry(f"{largura}x{altura}+{pos_x}+{pos_y}")  # Define tamanho e posição
         top.maxsize(200,240)
 
-        cal = Calendar(top, date_pattern="dd-mm-yyyy")  # Define o formato da data
+        cal = Calendar(top, date_pattern="yyyy-mm-dd")  # Define o formato da data
         cal.pack(pady=10)
 
         ttk.Button(top, text="Selecionar", command=selecionar_data).pack(pady=5)
