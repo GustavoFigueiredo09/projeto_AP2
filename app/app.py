@@ -9,11 +9,7 @@ from tela_relatorios import Tela_Relatorios  # Importando a tela RelatoriosS
 from tela_arquivos import Tela_Arquivos  # Importando a tela Arquivos
 from cadastro_usuario import Cadastro_Usuario  # Importa a tela de cadastro de usuários
 from cadastro_terceiros import Cadastro_Terceiros  # Importa a tela de cadastro de terceiros
-<<<<<<< HEAD
-from session import SessaoUsuario # Importação do Sigleton
-=======
 from session import SessaoUsuario
->>>>>>> c66ec039efb7bd4695b0d03f6b8bb38913a438b8
 
 class Cactus_Fiscal:
     def __init__(self, root):
