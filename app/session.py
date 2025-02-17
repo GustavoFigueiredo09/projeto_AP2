@@ -1,8 +1,8 @@
 class SessaoUsuario:
-    _instance = None # Variável que irá instanciar o usuário logado
+    _instance = None # Variável que instancia o usuário logado
 
     def __new__(cls):
-        if cls._instance is None: # cria uma instancia caso não exista uma ainda
+        if cls._instance is None: # cria uma instancia caso ainda não exista uma
             cls._instance = super(SessaoUsuario, cls).__new__(cls)
             cls._instance.usuario = None 
         return cls._instance # retorna a mesma instancia pra qualquer chamada

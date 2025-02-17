@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from functools import partial
-# import customtkinter as ctk  # Customização da interface
 from PIL import Image, ImageTk  # Para carregar e exibir a imagem
 from tela_login import LoginScreen  # Importando a tela de login
 from tela_lancamentos import Tela_Lancamentos  # Importando a tela Lançamentos
@@ -9,7 +8,7 @@ from tela_relatorios import Tela_Relatorios  # Importando a tela RelatoriosS
 from tela_arquivos import Tela_Arquivos  # Importando a tela Arquivos
 from cadastro_usuario import Cadastro_Usuario  # Importa a tela de cadastro de usuários
 from cadastro_terceiros import Cadastro_Terceiros  # Importa a tela de cadastro de terceiros
-from session import SessaoUsuario
+from session import SessaoUsuario # Importação do Singleton
 
 class Cactus_Fiscal:
     def __init__(self, root):
@@ -45,7 +44,7 @@ class Cactus_Fiscal:
         edit.add_separator()
         edit.add_command(label='Relatórios', command=lambda: Tela_Relatorios(self))
         
-        # Submenu de cadastros
+        # Apenas admins poderam acessar as telas cadastros
         if dados_usuario['adm'] == 1:
             cadastros_menu = tk.Menu(edit, tearoff=0)
             edit.add_separator()
@@ -55,8 +54,6 @@ class Cactus_Fiscal:
         
         edit.add_separator()
         edit.add_command(label='Arquivos', command=lambda: Tela_Arquivos(self))
-        
-        # Sobre dentro do menu principal
         edit.add_separator()
         edit.add_command(label='Sobre', command=self.AboutWindow)
         
@@ -91,7 +88,7 @@ class Cactus_Fiscal:
         for widget in self.frame_1.winfo_children():
             widget.destroy()
 
-    # Saindo do sistema após clicar no botão "sair" com confirmação
+    # Saindo do sistema após clicar no botão "sair"
     def Exit(self):
         if messagebox.askyesno("Confirmação", "Tem certeza que deseja sair?"):
             self.window.destroy()
@@ -117,7 +114,6 @@ def start_main_app():
     main_root.mainloop()
 
 if __name__ == "__main__":
-    # Tela de login
     root = tk.Tk()  # Janela pra tela de login
     login = LoginScreen(root, on_login_success=start_main_app)  # Criando a tela de login
     root.mainloop()

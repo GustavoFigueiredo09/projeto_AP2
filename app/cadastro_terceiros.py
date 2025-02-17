@@ -30,7 +30,7 @@ def Cadastro_Terceiros(instance):
     def carregar_dados_tabela(filtro=None):
         terceiro = Terceiros()
         
-        # Chama o novo método buscar_por_nome() que aplica o filtro corretamente
+        # Filtro  para busca de terceiros cadastrados
         dados_terceiros = terceiro.buscar_por_nome(filtro)
 
         tree.delete(*tree.get_children())  # Limpa a tabela antes de inserir os novos dados
@@ -38,6 +38,7 @@ def Cadastro_Terceiros(instance):
         for t in dados_terceiros:
             tree.insert("", "end", values=(t['razao'], t['nome_fantasia'], t['email'], t['telefone'], t['cpf_cnpj']))
 
+    # Filtragem por nome
     def filtrar_por_nome():
         nome_busca = search_entry.get().strip()
         carregar_dados_tabela(nome_busca if nome_busca else None)
@@ -47,6 +48,7 @@ def Cadastro_Terceiros(instance):
 
     carregar_dados_tabela()
 
+    # Abre janela para novo terceiro
     def abrir_janela_terceiro(dados=None):
         def salvar():
             novo_dados = {
@@ -58,7 +60,7 @@ def Cadastro_Terceiros(instance):
                 "categoria": categoria_entry.get().strip()
             }
 
-            if all(novo_dados.values()):
+            if all(novo_dados.values()): # Verifica se todos os campos estão preenchidos
                 terceiro = Terceiros()
                 if dados:
                     terceiro.update(novo_dados, f"razao = '{dados['razao']}'")
@@ -66,8 +68,8 @@ def Cadastro_Terceiros(instance):
                     terceiro.create_terceiro(novo_dados)
                 messagebox.showinfo("Sucesso", "Dados salvos com sucesso!")
                 cadastro_window.destroy()
-                carregar_dados_tabela()
-            else:
+                carregar_dados_tabela() # Atualiza a tabela com o novo terceiro cadastrado
+            else: 
                 messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
 
         cadastro_window = Toplevel(instance.frame_1)
@@ -101,6 +103,7 @@ def Cadastro_Terceiros(instance):
         salvar_button = Button(cadastro_window, text="Salvar", font=(instance.font_4, 12), command=salvar, bg="#67a516", fg="white")
         salvar_button.pack(pady=20)
 
+    # Editando terceiros ja cadastrados
     def editar_terceiro():
         selected_item = tree.selection()
         if selected_item:
@@ -133,10 +136,10 @@ def Cadastro_Terceiros(instance):
             # Mapeamento dos campos
             razao_entry, nome_entry, email_entry, telefone_entry, cpf_cnpj_entry = entries
 
-            # Função para salvar alterações
+            # Salvando alterações
             def salvar_edicao():
                 try:
-                    telefone = int(telefone_entry.get()) if telefone_entry.get().isdigit() else None  # Converte telefone para INT
+                    telefone = int(telefone_entry.get()) if telefone_entry.get().isdigit() else None
 
                     dados_editados = {
                         "razao": razao_entry.get(),
@@ -148,11 +151,11 @@ def Cadastro_Terceiros(instance):
 
                     if all(dados_editados.values()):  # Verifica se todos os campos estão preenchidos
                         terceiro = Terceiros()
-                        terceiro.update(dados_editados, f'cpf_cnpj = "{item_values[4]}"')  # Atualiza com CPF/CNPJ como identificador
+                        terceiro.update(dados_editados, f'cpf_cnpj = "{item_values[4]}"') 
 
                         messagebox.showinfo("Sucesso", "Terceiro editado com sucesso!")
                         editar_window.destroy()
-                        carregar_dados_tabela()  # Atualiza a tabela na interface
+                        carregar_dados_tabela()  # Atualiza a tabela com as informações editadas
                     else:
                         messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
                 
@@ -165,7 +168,8 @@ def Cadastro_Terceiros(instance):
 
         else:
             messagebox.showerror("Erro", "Selecione um terceiro para editar.")
-    
+
+    # Remove terceiro do banco
     def remover_terceiro():
         selected_item = tree.selection()
         if selected_item:
@@ -173,15 +177,18 @@ def Cadastro_Terceiros(instance):
             terceiro = Terceiros()
             terceiro.delete(f"razao = '{item_values[0]}'")
             messagebox.showinfo("Sucesso", "Terceiro removido com sucesso!")
-            carregar_dados_tabela()
+            carregar_dados_tabela() # Atualiza o banco com a informação removida
         else:
             messagebox.showerror("Erro", "Selecione um terceiro para remover.")
     
+    # Botão Novo
     novo_button = Button(instance.frame_1, text="+ Novo", font=(instance.font_4, 12), command=lambda: abrir_janela_terceiro(), bg="#67a516", fg="white")
     novo_button.place(x=375, y=550)
 
+    # Botão Editar
     editar_button = Button(instance.frame_1, text="Editar", font=(instance.font_4, 12), command=editar_terceiro, bg="#67a516", fg="white")
     editar_button.place(x=575, y=550)
 
+    # Botão remover
     remover_button = Button(instance.frame_1, text="Remover", font=(instance.font_4, 12), command=remover_terceiro, bg="#67a516", fg="white")
     remover_button.place(x=775, y=550)
