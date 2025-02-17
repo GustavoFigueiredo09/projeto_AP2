@@ -11,17 +11,8 @@ class Usuario(BaseCRUD):
     def busca_todos(self):
         return super().read()
     
-    def busca_por_admins(self, info_tipo='*'):
-        return super().read(filtro='admin = 1', info=info_tipo)
-    
-    def busca_por_users(self, info_tipo='*'):
-        return super().read(filtro='admin = 0', info=info_tipo)
-    
     def busca_por_nome(self, nome, info_tipo='*'):
         return super().read(filtro=f'nome LIKE "%{nome}%"', info=info_tipo)
-    
-    def busca_por_senha(self, senha, info_tipo='*'):
-        return super().read(filtro=f'senha = {senha}', info=info_tipo)
     
     def buscar_login_e_senha(self, login, senha):
         return super().read(filtro=f'login = "{login}" AND senha = {senha}')

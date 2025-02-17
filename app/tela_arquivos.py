@@ -4,7 +4,6 @@ from session import SessaoUsuario
 from backend.database.models.arquivos import Arquivo
 import os
 
-
 def Tela_Arquivos(instance):
     instance.ClearScreen()
 
@@ -97,4 +96,3 @@ def Delete_Arquivo(instance):
     
     # Atualizando a lista de arquivos salvos após a exclusão
     Load_Saved_Arquivos(instance)
-

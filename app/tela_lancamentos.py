@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-import customtkinter as ctk
 from tkinter import messagebox
 from tkcalendar import Calendar
 from backend.database.models.lancamentos import Lancamento
@@ -14,7 +13,7 @@ def Tela_Lancamentos(root):
     style = ttk.Style()
     style.configure("Custom.TCombobox", font=("Arial", 14))  
 
-    def salvar():
+    def salvar(): # Salvar os dados digitados pelo usuário 
         dados = {"codigo":entry_cod.get(),
                  "data": data_entry.get(),
                  "valor_total": nota_entry.get(),
@@ -39,7 +38,7 @@ def Tela_Lancamentos(root):
         else:
             messagebox.showwarning("Aviso", "Preencha todos os campos!")   
 
-    def limpar_tudo():
+    def limpar_tudo(): # Limpar os dados digitados pelo usuário 
         # Limpa todos os campos
         entry_cod.delete(0, tk.END)
         data_entry.delete(0,tk.END)
@@ -67,7 +66,6 @@ def Tela_Lancamentos(root):
   
         except:
             messagebox.showwarning("Aviso", "Nenhum lançamento encontrado com esse código!")
-    
 
     def abrir_calendario():
     
@@ -92,7 +90,6 @@ def Tela_Lancamentos(root):
         cal.pack(pady=10)
 
         ttk.Button(top, text="Selecionar", command=selecionar_data).pack(pady=5)
-
 
     #Labels & Entradas 
     label_lancamento = Label(root.frame_1, text="Tela de Lançamentos", font=("Arial", 15, "bold"),bg="#FDFDE3")

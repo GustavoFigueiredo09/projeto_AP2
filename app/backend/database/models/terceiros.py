@@ -19,12 +19,3 @@ class Terceiros(BaseCRUD):
         except Exception as e:
             print(f"Erro ao cadastrar terceiro: {e}")
             return None
-
-    def busca_por_cpf_cnpj(self, cpf, info_tipo='*'):
-        return super().read(f"cpf_cnpj='{cpf}'", info=info_tipo)
-    
-    def busca_por_cliente(self, categoria, info_tipo='*'):
-        return super().read(f"categoria='{categoria}'", info=info_tipo)
-    
-    def busca_por_telefone(self, fone, info_tipo='*'):
-        return super().read(f"telefone='{fone}'", info=info_tipo)
