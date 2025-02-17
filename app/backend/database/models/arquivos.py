@@ -31,27 +31,6 @@ class Arquivo(BaseCRUD):
         id_usuario = id_usuario[0][0]
         arquivos = self.read(info='*', filtro=f'id_arquivo = {id_usuario}')
         return arquivos
-
-    def salva_arquivo_do_banco(self, usuario_login, nome_do_arquivo):
-        comando = f'SELECT id_usuario FROM usuarios WHERE login LIKE ?'
-        tupla_nome = (usuario_login,)
-        id_usuario = self.custom_command(comando, parametros=tupla_nome)
-        if not id_usuario:
-            print(f"Usuário {usuario_login} não encontrado.")
-            return None
-        
-        id_usuario = id_usuario[0][0]
-        arquivos = self.read(filtro=f'id_arquivo = {id_usuario}')
-        
-        if nome_do_arquivo:
-            arquivo = [a['arquivo'] for a in arquivos if a['nome_arquivo'] == nome_do_arquivo] or None
-            if arquivo:
-                caminho_arquivo = os.path.abspath(f'app/backend/files/{nome_do_arquivo}')
-                with open(caminho_arquivo, 'wb') as f:
-                    f.write(arquivo[0])
-                print(f"Arquivo {nome_do_arquivo} salvo com sucesso.")
-            else:
-                print(f"Arquivo {nome_do_arquivo} não encontrado.")
     
     # Exclui o(s) arquivo(s) selecionado(s)
     def excluir_arquivo(self, nome_do_arquivo):

@@ -1,8 +1,4 @@
 from tkinter import *
-import tkinter as tk
-from tkinter import ttk
-import matplotlib.pyplot as plt
-import numpy as np
 from tgrafico import iniciar_thread
 
 def Tela_Relatorios(instance): 
