@@ -377,7 +377,7 @@ Lista das tecnologias, frameworks e bibliotecas utilizadas no desenvolvimento do
 
 ## 💾 Modularização
 
-Estrutura de organização do projeto
+Estrutura de pastas do projeto
 
 <p align="center">
     <img src="images/estrutura_pastas.png" alt="Texto Alternativo" width="350">
