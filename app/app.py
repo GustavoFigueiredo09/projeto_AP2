@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from functools import partial
-import customtkinter as ctk  # Customização da interface
+# import customtkinter as ctk  # Customização da interface
 from PIL import Image, ImageTk  # Para carregar e exibir a imagem
 from tela_login import LoginScreen  # Importando a tela de login
 from tela_lancamentos import Tela_Lancamentos  # Importando a tela Lançamentos
@@ -9,9 +9,13 @@ from tela_relatorios import Tela_Relatorios  # Importando a tela RelatoriosS
 from tela_arquivos import Tela_Arquivos  # Importando a tela Arquivos
 from cadastro_usuario import Cadastro_Usuario  # Importa a tela de cadastro de usuários
 from cadastro_terceiros import Cadastro_Terceiros  # Importa a tela de cadastro de terceiros
+from session import SessaoUsuario # Importação do Sigleton
 
 class Cactus_Fiscal:
     def __init__(self, root):
+        usuario_atual = SessaoUsuario()
+        dados_usuario = usuario_atual.get_usuario()
+
         self.window = root
         self.window.geometry(self.centralizando_tela())  
         self.window.resizable(True, True)
@@ -40,13 +44,14 @@ class Cactus_Fiscal:
         edit.add_command(label='Lançamentos', command=lambda: Tela_Lancamentos(self))
         edit.add_separator()
         edit.add_command(label='Relatórios', command=lambda: Tela_Relatorios(self))
-        edit.add_separator()
         
         # Submenu de cadastros
-        cadastros_menu = tk.Menu(edit, tearoff=0)
-        cadastros_menu.add_command(label='Cadastro de Usuários', command=lambda: Cadastro_Usuario(self))
-        cadastros_menu.add_command(label='Cadastro de Terceiros', command=lambda: Cadastro_Terceiros(self))
-        edit.add_cascade(label='Cadastros', menu=cadastros_menu)
+        if dados_usuario['adm'] == 1:
+            cadastros_menu = tk.Menu(edit, tearoff=0)
+            edit.add_separator()
+            cadastros_menu.add_command(label='Cadastro de Usuários', command=lambda: Cadastro_Usuario(self))
+            cadastros_menu.add_command(label='Cadastro de Terceiros', command=lambda: Cadastro_Terceiros(self))
+            edit.add_cascade(label='Cadastros', menu=cadastros_menu)
         
         edit.add_separator()
         edit.add_command(label='Arquivos', command=lambda: Tela_Arquivos(self))
